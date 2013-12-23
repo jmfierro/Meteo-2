@@ -23,24 +23,21 @@ public final class R {
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
         public static final int meteo_android_cloud=0x7f020001;
-        public static final int meteorologia_foto=0x7f020002;
-        public static final int meteorologia_foto_xl=0x7f020003;
-        public static final int meteorologia_nube1=0x7f020004;
+        public static final int meteo_rain=0x7f020002;
+        public static final int meteorologia_foto=0x7f020003;
+        public static final int meteorologia_foto_xl=0x7f020004;
+        public static final int meteorologia_nube1=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000c;
+        public static final int action_settings=0x7f090008;
         public static final int iconoPronostico=0x7f090001;
-        public static final int imageView1=0x7f090009;
+        public static final int imgCiudadDetallePronos=0x7f090007;
         public static final int listaCiudades=0x7f090000;
+        public static final int textCiudDetalleCiudadNomb=0x7f090006;
+        public static final int textCiudadDetallePaisNomb=0x7f090004;
+        public static final int textCiudadDetalleTemp=0x7f090005;
         public static final int textCiudadNomb=0x7f090002;
         public static final int textCiudadTemp=0x7f090003;
-        public static final int textView1=0x7f090004;
-        public static final int textView2=0x7f09000a;
-        public static final int textView3=0x7f09000b;
-        public static final int textView4=0x7f090005;
-        public static final int textView5=0x7f090006;
-        public static final int textView6=0x7f090007;
-        public static final int textView7=0x7f090008;
     }
     public static final class layout {
         public static final int activity_meteo_main=0x7f030000;

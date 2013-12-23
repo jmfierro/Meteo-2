@@ -2,6 +2,7 @@ package com.utad.android.meteojmfierro;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Adapter;
@@ -20,13 +21,6 @@ public class MeteoMainActivity extends Activity {
 		final ListView lv = (ListView) findViewById(R.id.listaCiudades);
 		lv.setAdapter(new MeteoAdapter(this));
 		
-//		lv.setOnItemClickListener(new OnItemClickListener() {
-//			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-//				
-//			}
-//		});
-		
-
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -34,6 +28,9 @@ public class MeteoMainActivity extends Activity {
 					long aId) {
 				Toast.makeText(MeteoMainActivity.this, "Pulsado item #" + aPosition, Toast.LENGTH_SHORT).show();
 				lv.setItemChecked(aPosition, true);
+				
+				Intent intent = new Intent(MeteoMainActivity.this,MeteoCiudadDetalle.class);
+				startActivity(intent);
 				
 			}
 			});	}
