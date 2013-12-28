@@ -13,6 +13,7 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -22,43 +23,33 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MeteoMainActivity extends Activity {
+public class MeteoMainActivity extends ActionBarActivity {
 	
 	private WebBinder mWebBinder;
+	private ListView mListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.lista_ciudades); 
 
+		Log.d(MeteoMainActivity.class.getSimpleName(),"----------");
 		Log.d(MeteoMainActivity.class.getSimpleName(),"onCreate()");
+		Log.d(MeteoMainActivity.class.getSimpleName(),"-----------");
 
 		conexionWebServicio();
 		
 		/*--------------------
 		 * Vista del listview
 		 *--------------------*/
-		final ListView lv = (ListView) findViewById(R.id.listaCiudades);
-		lv.setAdapter(new MeteoAdapter(this));
-		
-		lv.setOnItemClickListener(new OnItemClickListener() { 
-
-			@Override
-			public void onItemClick(AdapterView<?> aParent, View aView, int aPosition,
-					long aId) {
-				Toast.makeText(MeteoMainActivity.this, "Pulsado item #" + aPosition, Toast.LENGTH_SHORT).show();
-				lv.setItemChecked(aPosition, true);
-				
-				Intent intent = new Intent(MeteoMainActivity.this,MeteoCiudadDetalle.class);
-				startActivity(intent);
-				
-			}
-			});	
+		mListView = (ListView) findViewById(R.id.listaCiudades);
+		mListView.setAdapter(new MeteoAdapter(this));
+		setOnClickItem();
 		
 	}
 	
 	
-	private void desconexionWebService(){
+	private void desconexionWebService(){ 
 		if (mWebServiceConn != null) {
 			Log.d(MeteoMainActivity.class.getSimpleName(),"unbindService(mWebServiceConn)");  
 			unbindService(mWebServiceConn);
@@ -104,7 +95,7 @@ public class MeteoMainActivity extends Activity {
 				 * >> Aviso del Servicio de que los datos ya estan actualizados.
 				 *    (callback)*/	   
 				@Override
-				public void onLoadDatosMeteo() {
+				public void onSetDatosMeteo() {
 					Log.d(MeteoMainActivity.class.getSimpleName(),"Aviso de WebServicio: datos actualizados!!!");
 					desconexionWebService();
 				}
@@ -113,12 +104,27 @@ public class MeteoMainActivity extends Activity {
 			/*---------------------------------------------------
 			 * Actualizar datos desde el servicio.
 			 *--------------------------------------------------*/
-			mWebBinder.getService().loadDatosMeteo();
+			mWebBinder.getService().loadWebDatosMeteo();
 		}
 	};
 	
 	
-	
+	private void setOnClickItem() {	
+		mListView.setOnItemClickListener(new OnItemClickListener() { 
+
+			@Override
+			public void onItemClick(AdapterView<?> aParent, View aView, int aPosition,
+					long aId) {
+				Toast.makeText(MeteoMainActivity.this, "Pulsado item #" + aPosition, Toast.LENGTH_SHORT).show();
+				mListView.setItemChecked(aPosition, true);
+				
+				Intent intent = new Intent(MeteoMainActivity.this,MeteoCiudadDetalle.class);
+				startActivity(intent);
+				
+			}
+			});
+	}
+
 	
 	
 	@Override

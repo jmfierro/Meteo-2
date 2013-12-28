@@ -12,7 +12,7 @@
         android:allowBackup="true"
         android:icon="@drawable/meteorologia_nube1" 
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
             android:name="com.jmfierro.utad.meteo.MeteoMainActivity"
             android:label="@string/app_name" >
@@ -23,7 +23,15 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.jmfierro.utad.meteo.MeteoCiudadDetalle"></activity>
+        <activity android:name="com.jmfierro.utad.meteo.MeteoCiudadDetalle"
+            android:parentActivityName="com.jmfierro.utad.meteo.MeteoMainActivity">
+            
+            <!-- El elemento meta-data es necesario para versiones inferiores a la 4.1 -->
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jmfierro.utad.meteo.MeteoMainActivity" />
+            
+        </activity>
         <service android:name="com.jmfierro.utad.meteo.servicios.WebServicio"></service>
     </application>
 

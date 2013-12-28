@@ -1,8 +1,11 @@
 package com.jmfierro.utad.meteo.servicios;
 
+import java.util.Date;
+
 import android.app.Service;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -19,7 +22,7 @@ public class WebServicio extends Service {
 	 * >> Método callback para la Actividad cliente.
 	 */
 	public interface OnWebListener {
-		public void onLoadDatosMeteo();
+		public void onSetDatosMeteo();
 	}
 
 	public void setOnWebListener (OnWebListener aWebListener) {
@@ -44,16 +47,10 @@ public class WebServicio extends Service {
 	/*----------------------------------------------------
 	 * Método al que acceden los Clientes desde su proceso
 	 *----------------------------------------------------*/
-	public boolean loadDatosMeteo(){
+	public void loadWebDatosMeteo(){
 		Log.d(WebServicio.class.getSimpleName(),"Descarga y actualización de datos");
-		/*
-		 * >> Aviso al cliente.
-		 */
-		if (this.mWebListener != null)
-			this.mWebListener.onLoadDatosMeteo();
 		
-		return false;
-		
+		new LoadWedTask().execute("http://api.openweathermap.org/data/2.5/weather?q=Madrid");
 	}
 	
 	
@@ -66,7 +63,7 @@ public class WebServicio extends Service {
 	 * 	  Debe devolver un IBinder para que se establezca la conexión.
 	 */
 	@Override
-	public IBinder onBind(Intent arg0) {
+	public IBinder onBind(Intent arg0) { 
 		return new WebBinder();
 	}
 	
@@ -78,5 +75,40 @@ public class WebServicio extends Service {
 	public boolean onUnbind(Intent intent) {
 		this.mWebListener = null;
 		return super.onUnbind(intent);
+	}
+	
+	/*
+	 * Nuevo hilo para conexión a internet y guardar en base de datos.
+	 */
+	public class LoadWedTask extends AsyncTask<String, Void, Void>{
+		
+		
+		/*------------------------------------------------
+		 * Comienzo del nuevo hilo.
+		 * Conexión a internet y guardar en base de datos.
+		 *------------------------------------------------*/
+		@Override
+		protected Void doInBackground(String... params) {
+			Log.d(WebServicio.class.getSimpleName(),"doInBackground: " + params[0]);
+			
+			return null;
+		}
+
+		/*-------------------------------------------------
+		 * Finalización del hilo.
+		 * Aviso callbacks al cliente
+		 *-------------------------------------------------*/
+		@Override
+		protected void onPostExecute(Void result) {
+			Log.d(WebServicio.class.getSimpleName(),"onPostExecute()");
+			//super.onPostExecute(result);
+			/*
+			 * >> Aviso al cliente cuuando la base de datos esta acutalizada.
+			 */
+			if (WebServicio.this.mWebListener != null)
+				WebServicio.this.mWebListener.onSetDatosMeteo();
+			
+		}
+
 	}
 }

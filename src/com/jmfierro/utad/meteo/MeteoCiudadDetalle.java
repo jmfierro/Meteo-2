@@ -2,19 +2,27 @@ package com.jmfierro.utad.meteo;
 
 import com.jmfierro.utad.meteo.R;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class MeteoCiudadDetalle extends Activity {
+public class MeteoCiudadDetalle extends ActionBarActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.meteo_ciudad_detalle);
+		
+		//  Home del ActionBar
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true); 
+
 		
 		// Datos del pronóstico de una ciudad
 		ImageView  imgPronos  = (ImageView) findViewById(R.id.imgCiudadDetallePronos);
@@ -25,6 +33,32 @@ public class MeteoCiudadDetalle extends Activity {
 		TextView textCiudadNomb = (TextView) findViewById(R.id.textCiudadNomb);
 		TextView textCiudadPaisNomb = (TextView) findViewById(R.id.textCiudadDetallePaisNomb);
 		
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			Intent upIntent = NavUtils.getParentActivityIntent(this);
+			
+			if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+	            // This activity is NOT part of this app's task, so create a new task
+	            // when navigating up, with a synthesized back stack.
+				TaskStackBuilder.create(this)
+	                    // Add all of this activity's parents to the back stack
+						.addNextIntent(upIntent)
+	                    // Navigate up to the closest parent
+						.startActivities();
+			}
+			else {
+				NavUtils.navigateUpTo(this, upIntent);
+			}
+			
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 }

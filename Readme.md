@@ -30,7 +30,7 @@ Sin wifi en casa, simulo la lectura de datos desde un **fichero JSON que sitúo 
 
 Para la lectura de datos de internet, o fichero en raw, inicio un servicio para que se ejecute en segundo plano, implementado la clase **WebServicio()**. Esto permite que la conexión a internet se haga en segundo plano y de forma independiente a la actividad que lo llama, es decir, que si se destruye la actividad cliente, el servicio seguirá ejecutándose, lo que permitirá que la base de datos, que implementare más adelante se actualicé. 
 
-Además ejecuto el código de la conexión en un hilo separado, utilizando un **AsyncTask**. Con ello la conexión a internet tendrá su propio proceso y sin interferir en el de la aplicación.
+ Ejecuto el servicio un hilo separado, utilizando un **android:process=":proceso_web_service"**. Con ello la conexión a internet tendrá su propio proceso y no afectará a la interfaz del usuario. En principio no será un servicio global a si que pongo **":"** como prefijo del proceso.
 
 Me decido por un **bindService()** porque quiero que haya comunicación entre la actividad y el servicio. El servicio avisará a la actividad cliente cuando los datos hayan sido ya bajados de internet.
 
