@@ -2,7 +2,11 @@
 <resources>
 
     <string name="app_name">Meteo [JMFierro]</string>
-    <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Compartir</string>
+    <string name="action_add_location">Añadir localidad</string>
+    <string name="action_search">Buscar localidad</string>
+    
 </resources>

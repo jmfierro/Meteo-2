@@ -2,7 +2,6 @@
 *.pydevproject
 .project
 .metadata
-bin/**
 tmp/**
 tmp/**/*
 *.tmp
@@ -10,10 +9,14 @@ tmp/**/*
 *.swp
 *~.nib
 local.properties
-.classpath
 .settings/
 .loadpath
 .externalToolBuilders/
 *.launch
 .buildpath
-gen
+
+bin/
+gen/
+project.properties
+.classpath
+.project

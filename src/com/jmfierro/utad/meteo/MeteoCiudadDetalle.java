@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class MeteoCiudadDetalle extends ActionBarActivity {
+public class MeteoCiudadDetalle extends MeteoMenuActionBarActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,29 +37,50 @@ public class MeteoCiudadDetalle extends ActionBarActivity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			Intent upIntent = NavUtils.getParentActivityIntent(this);
-			
-			if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-	            // This activity is NOT part of this app's task, so create a new task
-	            // when navigating up, with a synthesized back stack.
-				TaskStackBuilder.create(this)
-	                    // Add all of this activity's parents to the back stack
-						.addNextIntent(upIntent)
-	                    // Navigate up to the closest parent
-						.startActivities();
-			}
-			else {
-				NavUtils.navigateUpTo(this, upIntent);
-			}
-			
-			return true;
-
-		default:
-			return super.onOptionsItemSelected(item);
-		}
+	protected void onResume() {
+		/*----------------------------------------------------------
+		 * Para saber si la avtividad es visible 
+		 * (gestion de menus desde MeteoMenuActionBarActivity)
+		 *---------------------------------------------------------*/
+		activityResumed(MeteoCiudadDetalle.class);
+		super.onResume(); 
 	}
+
+	@Override
+	protected void onPause() {
+		/*----------------------------------------------------------
+		 * Para saber si la avtividad es visible 
+		 * (gestion de menus desde MeteoMenuActionBarActivity)
+		 *---------------------------------------------------------*/
+		activityPaused();
+		super.onPause();
+	}
+
+	
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		switch (item.getItemId()) {
+//		case android.R.id.home:
+//			Intent upIntent = NavUtils.getParentActivityIntent(this);
+//			
+//			if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+//	            // This activity is NOT part of this app's task, so create a new task
+//	            // when navigating up, with a synthesized back stack.
+//				TaskStackBuilder.create(this)
+//	                    // Add all of this activity's parents to the back stack
+//						.addNextIntent(upIntent)
+//	                    // Navigate up to the closest parent
+//						.startActivities();
+//			}
+//			else {
+//				NavUtils.navigateUpTo(this, upIntent);
+//			}
+//			
+//			return true;
+//
+//		default:
+//			return super.onOptionsItemSelected(item);
+//		}
+//	}
 
 }

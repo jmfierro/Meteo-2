@@ -23,7 +23,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MeteoMainActivity extends ActionBarActivity {
+public class MeteoMainActivity extends MeteoMenuActionBarActivity {
+	
 	
 	private WebBinder mWebBinder;
 	private ListView mListView;
@@ -44,10 +45,30 @@ public class MeteoMainActivity extends ActionBarActivity {
 		 *--------------------*/
 		mListView = (ListView) findViewById(R.id.listaCiudades);
 		mListView.setAdapter(new MeteoAdapter(this));
-		setOnClickItem();
+		setOnClickItemListView();
 		
 	}
 	
+	
+	@Override
+	protected void onResume() {
+		/*----------------------------------------------------------
+		 * Para saber si la avtividad es visible 
+		 * (gestion de menus desde MeteoMenuActionBarActivity)
+		 *---------------------------------------------------------*/
+		activityResumed(MeteoMainActivity.class);
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		/*----------------------------------------------------------
+		 * Para saber si la avtividad es visible 
+		 * (gestion de menus desde MeteoMenuActionBarActivity)
+		 *---------------------------------------------------------*/
+		activityPaused();
+		super.onPause();
+	}
 	
 	private void desconexionWebService(){ 
 		if (mWebServiceConn != null) {
@@ -109,7 +130,7 @@ public class MeteoMainActivity extends ActionBarActivity {
 	};
 	
 	
-	private void setOnClickItem() {	
+	private void setOnClickItemListView() {	
 		mListView.setOnItemClickListener(new OnItemClickListener() { 
 
 			@Override
@@ -123,15 +144,6 @@ public class MeteoMainActivity extends ActionBarActivity {
 				
 			}
 			});
-	}
-
-	
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.meteo_main, menu);
-		return true;
 	}
 
 
