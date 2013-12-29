@@ -23,7 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MeteoMainActivity extends MeteoMenuActionBarActivity {
+public class MeteoMainActivity extends MeteoMenuActionBarActivity implements MeteoListaCiudadesFragmento.Callbacks {
 	
 	
 	private WebBinder mWebBinder;
@@ -37,38 +37,22 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity {
 		Log.d(MeteoMainActivity.class.getSimpleName(),"----------");
 		Log.d(MeteoMainActivity.class.getSimpleName(),"onCreate()");
 		Log.d(MeteoMainActivity.class.getSimpleName(),"-----------");
-
+		
+		/*----------------------------------
+		 * Descarga de datos meteorológicos
+		 *----------------------------------*/
 		conexionWebServicio();
 		
 		/*--------------------
 		 * Vista del listview
 		 *--------------------*/
-		mListView = (ListView) findViewById(R.id.listaCiudades);
-		mListView.setAdapter(new MeteoAdapter(this));
-		setOnClickItemListView();
+//		mListView = (ListView) findViewById(R.id.listaCiudades);
+//		mListView.setAdapter(new ListAdapterGenerico(this));
+//		setOnClickItemListView();
 		
 	}
 	
 	
-	@Override
-	protected void onResume() {
-		/*----------------------------------------------------------
-		 * Para saber si la avtividad es visible 
-		 * (gestion de menus desde MeteoMenuActionBarActivity)
-		 *---------------------------------------------------------*/
-		activityResumed(MeteoMainActivity.class);
-		super.onResume();
-	}
-
-	@Override
-	protected void onPause() {
-		/*----------------------------------------------------------
-		 * Para saber si la avtividad es visible 
-		 * (gestion de menus desde MeteoMenuActionBarActivity)
-		 *---------------------------------------------------------*/
-		activityPaused();
-		super.onPause();
-	}
 	
 	private void desconexionWebService(){ 
 		if (mWebServiceConn != null) {
@@ -85,9 +69,9 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity {
 	
 	private ServiceConnection mWebServiceConn = new ServiceConnection() {
 		
-		/*
+		/**=====================================================
 		 * >> Finalización del Servicio por causas desconocidas.
-		 */
+		 *======================================================*/
 		@Override
 		public void onServiceDisconnected(ComponentName name) { 
 			Log.d(MeteoMainActivity.class.getSimpleName(),"Conexión a WedService");
@@ -95,9 +79,9 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity {
 		}
 
 		
-		/*
+		/**========================
 		 * >> Inicio del Servicio.
-		 */
+		 *=========================*/
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			Log.d(MeteoMainActivity.class.getSimpleName(),"Conexión a WedService");
@@ -130,20 +114,29 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity {
 	};
 	
 	
-	private void setOnClickItemListView() {	
-		mListView.setOnItemClickListener(new OnItemClickListener() { 
+//	private void setOnClickItemListView() {	
+//		mListView.setOnItemClickListener(new OnItemClickListener() { 
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> aParent, View aView, int aPosition,
+//					long aId) {
+//				Toast.makeText(MeteoMainActivity.this, "Pulsado item #" + aPosition, Toast.LENGTH_SHORT).show();
+//				mListView.setItemChecked(aPosition, true);
+//				
+//				Intent intent = new Intent(MeteoMainActivity.this,MeteoCiudadDetalle.class);
+//				startActivity(intent);
+//				
+//			}
+//			});
+//	}
 
-			@Override
-			public void onItemClick(AdapterView<?> aParent, View aView, int aPosition,
-					long aId) {
-				Toast.makeText(MeteoMainActivity.this, "Pulsado item #" + aPosition, Toast.LENGTH_SHORT).show();
-				mListView.setItemChecked(aPosition, true);
-				
-				Intent intent = new Intent(MeteoMainActivity.this,MeteoCiudadDetalle.class);
-				startActivity(intent);
-				
-			}
-			});
+
+	@Override
+	public void onItemSeleccionado(String id) {
+		
+		Toast.makeText(this, "Pulsado #" + id, Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(MeteoMainActivity.this,MeteoCiudadDetalle.class);
+		startActivity(intent);
 	}
 
 

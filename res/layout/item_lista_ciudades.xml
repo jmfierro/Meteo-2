@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <ImageView
-        android:id="@+id/iconoPronostico"
+        android:id="@+id/imgPronostico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -15,9 +15,9 @@
         android:id="@+id/textCiudadNomb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/iconoPronostico"
+        android:layout_alignBottom="@id/imgPronostico"
         android:layout_marginLeft="22dp"
-        android:layout_toRightOf="@id/iconoPronostico"
+        android:layout_toRightOf="@id/imgPronostico"
         android:padding="4dp"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />

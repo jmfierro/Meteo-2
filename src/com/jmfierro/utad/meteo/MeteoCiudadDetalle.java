@@ -19,7 +19,7 @@ public class MeteoCiudadDetalle extends MeteoMenuActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.meteo_ciudad_detalle);
+		setContentView(R.layout.ciudad_detalle);
 		
 		//  Home del ActionBar
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true); 
@@ -35,52 +35,5 @@ public class MeteoCiudadDetalle extends MeteoMenuActionBarActivity {
 		TextView textCiudadPaisNomb = (TextView) findViewById(R.id.textCiudadDetallePaisNomb);
 		
 	}
-
-	@Override
-	protected void onResume() {
-		/*----------------------------------------------------------
-		 * Para saber si la avtividad es visible 
-		 * (gestion de menus desde MeteoMenuActionBarActivity)
-		 *---------------------------------------------------------*/
-		activityResumed(MeteoCiudadDetalle.class);
-		super.onResume(); 
-	}
-
-	@Override
-	protected void onPause() {
-		/*----------------------------------------------------------
-		 * Para saber si la avtividad es visible 
-		 * (gestion de menus desde MeteoMenuActionBarActivity)
-		 *---------------------------------------------------------*/
-		activityPaused();
-		super.onPause();
-	}
-
-	
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		switch (item.getItemId()) {
-//		case android.R.id.home:
-//			Intent upIntent = NavUtils.getParentActivityIntent(this);
-//			
-//			if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-//	            // This activity is NOT part of this app's task, so create a new task
-//	            // when navigating up, with a synthesized back stack.
-//				TaskStackBuilder.create(this)
-//	                    // Add all of this activity's parents to the back stack
-//						.addNextIntent(upIntent)
-//	                    // Navigate up to the closest parent
-//						.startActivities();
-//			}
-//			else {
-//				NavUtils.navigateUpTo(this, upIntent);
-//			}
-//			
-//			return true;
-//
-//		default:
-//			return super.onOptionsItemSelected(item);
-//		}
-//	}
 
 }

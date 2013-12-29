@@ -8,17 +8,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-/*
+/*-------------------------------------------------------------
  * >> 	Gestiona el menu segun la actividad que esta visible.
- */
+ *-------------------------------------------------------------*/
 public class MeteoMenuActionBarActivity extends ActionBarActivity {
 	
-	private int mHashCode;
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (MeteoMainActivity.class.hashCode() == getClass().hashCode())
-			getMenuInflater().inflate(R.menu.ciudades_lista, menu);
+			getMenuInflater().inflate(R.menu.lista_ciudades, menu);
 		if (MeteoCiudadDetalle.class.hashCode() == getClass().hashCode())
 			getMenuInflater().inflate(R.menu.ciudad_detalle, menu);
 			
@@ -26,18 +25,6 @@ public class MeteoMenuActionBarActivity extends ActionBarActivity {
 	}
 
 	
-	  public  boolean isActivityVisible(Object claseCliente) { 
-		    return claseCliente.hashCode() == mHashCode;
-		  }  
-
-		  public void activityResumed(Object claseCliente) {
-		    mHashCode = claseCliente.hashCode();
-		  }
-
-		  public void activityPaused() {
-			mHashCode = 0;
-		  }
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
