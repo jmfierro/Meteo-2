@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.jmfierro.utad.meteo.MeteoCiudadDetalle"
+        <activity android:name="com.jmfierro.utad.meteo.MeteoLocalidadDetalle"
             android:parentActivityName="com.jmfierro.utad.meteo.MeteoMainActivity">
             
             <!-- El elemento meta-data es necesario para versiones inferiores a la 4.1 -->

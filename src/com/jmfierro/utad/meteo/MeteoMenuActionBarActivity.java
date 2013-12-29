@@ -17,9 +17,9 @@ public class MeteoMenuActionBarActivity extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (MeteoMainActivity.class.hashCode() == getClass().hashCode())
-			getMenuInflater().inflate(R.menu.lista_ciudades, menu);
-		if (MeteoCiudadDetalle.class.hashCode() == getClass().hashCode())
-			getMenuInflater().inflate(R.menu.ciudad_detalle, menu);
+			getMenuInflater().inflate(R.menu.lista_localidades, menu);
+		if (MeteoLocalidadDetalle.class.hashCode() == getClass().hashCode())
+			getMenuInflater().inflate(R.menu.localidad_detalle, menu);
 			
 			return true;
 	}

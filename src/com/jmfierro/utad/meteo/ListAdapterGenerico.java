@@ -23,15 +23,15 @@ public abstract class ListAdapterGenerico extends BaseAdapter {
 	/**=======================================================================================================
 	 *  Devuelve las vistas de cada item.
 	 *  
-	 * @param aItem El item que que será la asociada a la view. La entrada es del tipo del paquete/handler
+	 * @param aItem El item que será la asociada a la view. La entrada es del tipo del paquete/handler
 	 * @param view View particular que contendrá los datos del paquete/handler
 	 *=========================================================================================================*/
-	//public abstract void onEntrada (Object aItem, View view);
-	public abstract void onEntrada (View view);
+	//public abstract void onSetItemForListAdapterGenerico (Object aItem, View view);
+	public abstract void onSetItemForListAdapterGenerico (View view);
 
 	/**==============================================================
 	 * Constructor: guarda la referencia a la actividad principal
-	 * como contexto 
+	 * 				como contexto 
 	 *===============================================================*/
 	//public ListAdapterGenerico(Context contexto, int R_layout_IdView, ArrayList<?> entradas) {
 	public ListAdapterGenerico(Context contexto, int R_layout_IdView) {
@@ -74,8 +74,11 @@ public abstract class ListAdapterGenerico extends BaseAdapter {
 			convertView = inflater.inflate(mR_layout_IdView, null);
 		}
 
-		//onEntrada (entradas.get(position), convertView);
-		onEntrada (convertView);
+		/*------------------------------------------------------------------
+		 * Rellena la vista del item en el método que utiliza el adaptador.
+		 *------------------------------------------------------------------*/
+		//onSetItemForListAdapterGenerico (entradas.get(position), convertView);
+		onSetItemForListAdapterGenerico (convertView);
 
 		//		ImageView iconoPronostico = (ImageView) convertView.findViewById(R.id.iconoPronostico);
 		//		iconoPronostico.setImageDrawable(mMeteoContext.getResources().getDrawable(R.raw.meteo_rain));

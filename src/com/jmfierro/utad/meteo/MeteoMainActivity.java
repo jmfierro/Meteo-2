@@ -23,7 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MeteoMainActivity extends MeteoMenuActionBarActivity implements MeteoListaCiudadesFragmento.Callbacks {
+public class MeteoMainActivity extends MeteoMenuActionBarActivity implements MeteoListaLocalidadesFragmento.Callbacks {
 	
 	
 	private WebBinder mWebBinder;
@@ -32,7 +32,7 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.lista_ciudades); 
+		setContentView(R.layout.lista_localidades); 
 
 		Log.d(MeteoMainActivity.class.getSimpleName(),"----------");
 		Log.d(MeteoMainActivity.class.getSimpleName(),"onCreate()");
@@ -130,12 +130,14 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 //			});
 //	}
 
-
+	/**========================================================================================
+	 * CallBack que recibe el item seleccionado desde MeteoListaLocalidadesFragmento.Callbacks
+	 *=========================================================================================*/
 	@Override
 	public void onItemSeleccionado(String id) {
 		
 		Toast.makeText(this, "Pulsado #" + id, Toast.LENGTH_SHORT).show();
-		Intent intent = new Intent(MeteoMainActivity.this,MeteoCiudadDetalle.class);
+		Intent intent = new Intent(MeteoMainActivity.this,MeteoLocalidadDetalle.class);
 		startActivity(intent);
 	}
 
