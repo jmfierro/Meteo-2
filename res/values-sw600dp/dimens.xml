@@ -1,8 +1,10 @@
 <resources>
 
     <!--
-         Customize dimensions originally defined in res/values/dimens.xml (such as
-         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+		Layout para dispusitivos a partir de 7 pulgadas 
     -->
+    <item type="bool" name="tablet">true</item> 
+    <item type="layout" name="meteo_main">@layout/meteo_main_dospaneles</item>
 
 </resources>
+

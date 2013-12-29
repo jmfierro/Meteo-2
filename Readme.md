@@ -69,6 +69,11 @@ Yo lo invoco desde **MeteoListaLocalidadesFragmento()**, que es llamado directam
 
 Los fragmentos los hago compatibles con versiones anteriores a Android 3.0 ó nivel 11, utilizando **android.support.v4...**
 
+Para la actividad del detalle de la localidad uso un **fragmento dinámico**.
+
+### Distinción del tamaño de la pantalla de dispositivos ###
+
+Creo **dimens.xml** en la carpeta **values-sw600dp** de "res" para detectar dispositivos con un tamaño de pantalla a partir de 7 pulgadas. La  variable  **dimensionPantalla** toma el valor true si es asi y falso para pantallas  menores. Igualmente la variable **main\_latout**  toma el valor de "meteo\_main\_unpanel" o "meteo\_main\_dospaneles" según el tamaño detectado.
 
 
 ### Wifi###

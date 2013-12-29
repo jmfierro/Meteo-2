@@ -4,4 +4,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!--
+		Layout para dispusitivos hasta de 7 pulgadas 
+    -->
+    <item type="bool" name="tablet">false</item> 
+    <item type="layout" name="meteo_main">@layout/meteo_main</item>
+    
 </resources>
+

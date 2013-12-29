@@ -1,0 +1,7 @@
+<!-- Fragmento estático para el listado de localidades 
+ -->
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/contenedorFrag_ciudadesLista"
+	    android:name="com.jmfierro.utad.meteo.MeteoListaLocalidadesFragmento"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>

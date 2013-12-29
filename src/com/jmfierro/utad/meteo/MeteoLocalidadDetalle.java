@@ -44,15 +44,6 @@ public class MeteoLocalidadDetalle extends MeteoMenuActionBarActivity {
 			.add(R.id.contenedorFrag_LocalidadDetalle, fragmento).commit();
 		}
 
-//		
-//		// Datos del pronóstico de una localidad
-//		ImageView  imgPronos  = (ImageView) findViewById(R.id.img_LocalidadDetalle_Pronos);
-////		imgPronos.setImageDrawable(this.getResources().getDrawable(R.raw.meteo_rain));
-//		imgPronos.setImageDrawable(this.getResources().getDrawable(R.drawable.meteo_rain));
-//		
-//		TextView textTemp = (TextView) findViewById(R.id.text_LocalidadDetalle_Temp);
-//		TextView textLocalidadNomb = (TextView) findViewById(R.id.text_LocalidadDetalle_Nomb);
-//		TextView textLocalidadPaisNomb = (TextView) findViewById(R.id.text_LocalidadDetalle_PaisNomb);
 		
 	}
 
