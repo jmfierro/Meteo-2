@@ -47,7 +47,6 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 		 *------------------------------*/
 		setListAdapter(new ListAdapterGenerico(getActivity(),R.layout.item_lista_localidades){
 			
-			
 			/*--------------------------------------------------------------------------
 			 * Rellena un item para que lo use el adaptador ListAdapterGenerico.
 			 *--------------------------------------------------------------------------*/
@@ -63,6 +62,14 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 			}
 			
 		});
+
+	}
+
+	@Override
+	public void onStart() { 
+		super.onStart();
+		if (getActivity().getApplication().getResources().getBoolean(R.bool.tablet))
+			getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 	}
 	
 	/**==============================================================================
@@ -96,6 +103,8 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 	public void onListItemClick(ListView listView, View view, int posicion, long id) {
 		super.onListItemClick(listView, view, posicion, id);		
 		//mCallbacks.onEntradaSelecionada(Lista_contenido.ENTRADAS_LISTA.get(posicion).id);
+		listView.setItemChecked(posicion, true);
+	
 		mCallbacks.onItemSeleccionado(Integer.toString(posicion));
 	}
 	

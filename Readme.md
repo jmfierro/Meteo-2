@@ -3,6 +3,7 @@
 ***Jose Manuel Fierro Conchouso***
 
 *U-Tad., Clase Android, Profesor Samuel Moreno, 2013-2014*
+
 # Comentarios sobre el desarrollo #
 ### APIS ###
 
@@ -76,7 +77,17 @@ Para la actividad del detalle de la localidad uso un **fragmento dinámico**.
 Creo **dimens.xml** en la carpeta **values-sw600dp** de "res" para detectar dispositivos con un tamaño de pantalla a partir de 7 pulgadas. La  variable  **dimensionPantalla** toma el valor true si es asi y falso para pantallas  menores. Igualmente la variable **main\_latout**  toma el valor de "meteo\_main\_unpanel" o "meteo\_main\_dospaneles" según el tamaño detectado.
 
 
-### Wifi###
+### Estilos y temas###
 
+Establezco un **tema** para todas las actividades: **Theme.AppCompat.Light.DarkActionBar** compatible con versiones antiguas de android. Para implementarlo modifico los **dimmens.xml** en los diferentes directorios **values**. Hago que todos los textos tengan el color #A0A0A0 (gris) poniéndolo en el tema **AppTheme**, para que afecte a todas las actividades por defecto.
+
+Para la actividad **MeteoMainActivity** cambio el tema por **LocalidadDetalleStyle** en el **AndroidManifiest.xml**. Pone el fondo negro. Hereda de AppTheme.
+
+Pongo el **estilo** (ListViewItemStyle) en el **RelativeLayout** de **item\_lista\_localidades.xml**. De fondo para el item de la lista aplica un drawable  (background.9.png) y para el item presionado otro (list_item_selected.9.png). También fija margenes y padding.   
+
+
+
+
+### Wifi###
 
 Sin wifi en casa, simulo la lectura de datos desde un **fichero JSON que sitúo en res/raw**. Más adelante lo adapto a una conexión con internet.

@@ -117,6 +117,10 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 	public void onItemSeleccionado(String id) {
 
 		Toast.makeText(this, "Pulsado #" + id, Toast.LENGTH_SHORT).show();
+		
+		/*---------------------------------
+		 * Pantallas a partir de 7 pulgadas
+		 *---------------------------------*/
 		if (getResources().getBoolean(R.bool.tablet)) {
 
 			MeteoLocalidadDetalleFragmento fragmento = new MeteoLocalidadDetalleFragmento();

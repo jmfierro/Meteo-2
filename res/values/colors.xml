@@ -1,0 +1,8 @@
+<resources>
+
+    <color name="app_background">#FFEEEEEE</color>
+    <color name="list_view_item_pressed">#FFB1D0FF</color>
+    
+    <color name="traslucent_background">#80000000</color>
+    
+</resources>
