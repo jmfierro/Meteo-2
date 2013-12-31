@@ -1,4 +1,4 @@
-package com.jmfierro.utad.meteo;
+package com.jmfierro.utad.meteo.ut;
 
 import java.util.ArrayList;
 

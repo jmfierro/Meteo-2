@@ -9,45 +9,116 @@
         android:layout_height="wrap_content"
         android:gravity="bottom" >
 
-       <TextView
-           android:id="@+id/text_LocalidadDetalle_Nomb"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentTop="true"
-           android:layout_centerHorizontal="true"
-           android:text="Localidad"
-           android:textAppearance="?android:attr/textAppearanceLarge" />
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical" >
 
-       <TextView
-           android:id="@+id/text_LocalidadDetalle_PaisNomb"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_below="@id/text_LocalidadDetalle_Nomb"
-           android:layout_centerHorizontal="true"
-           android:text="Pais"
-           android:textAppearance="?android:attr/textAppearanceMedium" />
-       
-       <TextView
-           android:id="@+id/text_LocalidadDetalle_Temp"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignParentRight="true"
-           android:layout_alignParentTop="true"
-           android:text="30º"
-           android:textAppearance="?android:attr/textAppearanceLarge"
-           android:textSize="60sp" />
+            <TextView
+                android:id="@+id/text_LocalidadDetalle_Nomb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Localidad"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-       </RelativeLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+            <TextView
+                android:id="@+id/text_LocalidadDetalle_PaisNomb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pais"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/text_LocalidadDetalle_Temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30º"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="60sp" />
+
+                <TextView
+                    android:id="@+id/textTempUd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_LocalidadDetalle_TempMaxMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10ºC - 5ªC"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/linearLayout2"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textDescripcion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/TextPresion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/textHumedad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/textVelocidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/textGrado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/img_LocalidadDetalle_Pronos"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:src="@drawable/ic_launcher" />
+
+        </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
     </LinearLayout>
 
     

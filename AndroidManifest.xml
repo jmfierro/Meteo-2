@@ -34,7 +34,7 @@
                 android:value="com.jmfierro.utad.meteo.MeteoMainActivity" />
             
         </activity>
-        <service android:name="com.jmfierro.utad.meteo.servicios.WebServicio"></service>
+        <service android:name="com.jmfierro.utad.meteo.weather.WebServicio"></service>
     </application>
 
 </manifest>

@@ -49,17 +49,17 @@ public class MeteoMenuActionBarActivity extends ActionBarActivity {
 			return true;
 
 		case R.id.action_search:
-			Toast.makeText(getApplicationContext(), "Se ha pulsado: Search", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Se ha pulsado: Search", Toast.LENGTH_SHORT).show();
 			
 			return true;
 
 		case R.id.action_add_location:
-			Toast.makeText(getApplicationContext(), "Se ha pulsado: Add_location", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Se ha pulsado: Add_location", Toast.LENGTH_SHORT).show();
 			
 			return true;
 			
 		case R.id.action_settings:
-			Toast.makeText(getApplicationContext(), "Se ha pulsado: Settings", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Se ha pulsado: Settings", Toast.LENGTH_SHORT).show();
 			return true;
 
 		// Intent implicito, el sistema abre las aplicaiones a elegir

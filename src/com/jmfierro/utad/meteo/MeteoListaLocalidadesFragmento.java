@@ -1,5 +1,7 @@
 package com.jmfierro.utad.meteo;
 
+import com.jmfierro.utad.meteo.ut.ListAdapterGenerico;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -102,7 +104,7 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 	@Override
 	public void onListItemClick(ListView listView, View view, int posicion, long id) {
 		super.onListItemClick(listView, view, posicion, id);		
-		//mCallbacks.onEntradaSelecionada(Lista_contenido.ENTRADAS_LISTA.get(posicion).id);
+		//mCallbacks.onEntradaSelecionada(Lista_contenido.ENTRADAS_LISTA.get(posicion).id); 
 		listView.setItemChecked(posicion, true);
 	
 		mCallbacks.onItemSeleccionado(Integer.toString(posicion));

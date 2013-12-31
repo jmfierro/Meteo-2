@@ -43,8 +43,6 @@ public class MeteoLocalidadDetalle extends MeteoMenuActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 			.add(R.id.contenedorFrag_LocalidadDetalle, fragmento).commit();
 		}
-
-		
 	}
 
 }
