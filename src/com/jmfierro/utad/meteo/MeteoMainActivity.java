@@ -2,10 +2,17 @@ package com.jmfierro.utad.meteo;
 // package="com.utad.android.meteojmfierro"
 
 
-import com.jmfierro.utad.meteo.weather.DatosMeteo;
-import com.jmfierro.utad.meteo.weather.WebServicio;
-import com.jmfierro.utad.meteo.weather.WebServicio.OnWebListener;
-import com.jmfierro.utad.meteo.weather.WebServicio.WebBinder;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.jmfierro.utad.meteo.datos.DatosMeteo;
+import com.jmfierro.utad.meteo.web.Weather;
+import com.jmfierro.utad.meteo.web.WeatherTask;
+import com.jmfierro.utad.meteo.web.WebServicio;
+import com.jmfierro.utad.meteo.web.loadWebTask;
+import com.jmfierro.utad.meteo.web.WebServicio.OnWebServicioListener;
+import com.jmfierro.utad.meteo.web.WebServicio.WebBinder;
 import com.jmfierro.utad.meteo.R;
 
 import android.os.Bundle;
@@ -51,10 +58,16 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 		 *----------------------------------*/
 		conexionWebServicio();
 
+//		WeatherTask wt = new WeatherTask();
+//		//Añade referencia del padre
+//		wt.setContext(this);
+//		wt.execute(45.0,10.0);
 
 	}
 
 
+    public void updateMyLayout(Weather w) {
+    }
 
 	private void desconexionWebService(){ 
 		if (mWebServiceConn != null) {
@@ -96,7 +109,7 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 			/*------------------------------------------------
 			 * Escucha de mensajes procedentes del Servicio
 			 *------------------------------------------------*/
-			mWebBinder.getService().setOnWebListener(new OnWebListener() { 
+			mWebBinder.getService().setOnWebServicioListener(new OnWebServicioListener() { 
 
 				/*
 				 * >> Aviso del Servicio de que los datos ya estan actualizados.
@@ -132,7 +145,94 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 
 					
 				}
-			});
+
+				@Override
+				public DatosMeteo parseJSON(DatosMeteo datosMeteo, String stringJSON) {
+						/*------------------------------
+						 * Parse objeto JSON
+						 *------------------------------*/
+						try {
+
+							//Generate the jsonObject form respobnse
+							JSONObject jsonObject = new JSONObject(stringJSON);
+
+							datosMeteo = new DatosMeteo();
+
+							datosMeteo.setNombre(jsonObject.getString("name"));
+
+							JSONArray array = jsonObject.getJSONArray("weather");
+
+							JSONObject object = array.getJSONObject(0);
+
+							datosMeteo.setMain(object.getString("main"));
+							datosMeteo.setDescripcion(object.getString("description"));
+							datosMeteo.setImg(object.getString("icon"));
+
+							JSONObject object2 = jsonObject.getJSONObject("main");
+							datosMeteo.setTemp(object2.getString("temp"));
+							datosMeteo.setTemp_min(object2.getString("temp_min"));
+							datosMeteo.setTemp_max(object2.getString("temp_max"));
+
+							datosMeteo.setPresion(object2.getString("pressure"));
+							datosMeteo.setHumedad(object2.getString("humidity"));
+
+							JSONObject object3 = jsonObject.getJSONObject("wind");
+							datosMeteo.setVelocidad(object3.getString("speed"));
+							datosMeteo.setGrado(object3.getString("deg"));
+
+						} catch (JSONException e) {
+							Log.e("JSON Parser", "Error parsing data " + e.toString());
+						}
+						
+						return datosMeteo;
+
+				} // ** FIN parseJSON() **
+
+				@Override
+				public DatosMeteo parseJSON(String stringJSON) {
+					
+					DatosMeteo datosMeteo = new DatosMeteo();
+					/*------------------------------
+					 * Parse objeto JSON
+					 *------------------------------*/
+					try {
+
+						//Generate the jsonObject form response
+						JSONObject jsonObject = new JSONObject(stringJSON);
+
+						//datosMeteo = new DatosMeteo();
+
+						datosMeteo.setNombre(jsonObject.getString("name"));
+
+						JSONArray array = jsonObject.getJSONArray("weather");
+
+						JSONObject object = array.getJSONObject(0);
+
+						datosMeteo.setMain(object.getString("main"));
+						datosMeteo.setDescripcion(object.getString("description"));
+						datosMeteo.setImg(object.getString("icon"));
+
+						JSONObject object2 = jsonObject.getJSONObject("main");
+						datosMeteo.setTemp(object2.getString("temp"));
+						datosMeteo.setTemp_min(object2.getString("temp_min"));
+						datosMeteo.setTemp_max(object2.getString("temp_max"));
+
+						datosMeteo.setPresion(object2.getString("pressure"));
+						datosMeteo.setHumedad(object2.getString("humidity"));
+
+						JSONObject object3 = jsonObject.getJSONObject("wind");
+						datosMeteo.setVelocidad(object3.getString("speed"));
+						datosMeteo.setGrado(object3.getString("deg"));
+
+					} catch (JSONException e) {
+						Log.e("JSON Parser", "Error parsing data " + e.toString());
+					}
+					
+					return datosMeteo;
+
+				}
+				
+			}); // ** FIN Task() **
 
 			/*---------------------------------------------------
 			 * Actualizar datos desde el servicio.
@@ -147,7 +247,7 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 	 * CallBack que recibe el item seleccionado desde MeteoListaLocalidadesFragmento.Callbacks
 	 *=========================================================================================*/
 	@Override
-	public void onItemSeleccionado(String id) {
+	public void onMyItemViewSeleccionado(String id) {
 
 		Toast.makeText(this, "Pulsado #" + id, Toast.LENGTH_SHORT).show();
 		
@@ -214,5 +314,7 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 //    	LinearLayout mainLayout = (LinearLayout)findViewById(R.id.mainlayout);
 //        mainLayout.setVisibility(View.VISIBLE);
     }
+
+
 
 }

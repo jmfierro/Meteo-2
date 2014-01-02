@@ -7,6 +7,10 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
+    
+    <!-- Internet permission -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
 
     <application
         android:allowBackup="true"
@@ -34,7 +38,7 @@
                 android:value="com.jmfierro.utad.meteo.MeteoMainActivity" />
             
         </activity>
-        <service android:name="com.jmfierro.utad.meteo.weather.WebServicio"></service>
+        <service android:name="com.jmfierro.utad.meteo.web.WebServicio"></service>
     </application>
 
 </manifest>

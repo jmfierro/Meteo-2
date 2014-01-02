@@ -1,7 +1,7 @@
 package com.jmfierro.utad.meteo;
 
 import com.jmfierro.utad.meteo.R;
-import com.jmfierro.utad.meteo.weather.DatosMeteo;
+import com.jmfierro.utad.meteo.datos.DatosMeteo;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,0 +1,164 @@
+﻿{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "León de Los Aldama",
+               "short_name" : "León de Los Aldama",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Guanajuato",
+               "short_name" : "GTO",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "México",
+               "short_name" : "MX",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "León de Los Aldama, GTO, México",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 21.2130529,
+                  "lng" : -101.5618105
+               },
+               "southwest" : {
+                  "lat" : 21.0303351,
+                  "lng" : -101.7664194
+               }
+            },
+            "location" : {
+               "lat" : 21.123619,
+               "lng" : -101.680496
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 21.2130529,
+                  "lng" : -101.5618105
+               },
+               "southwest" : {
+                  "lat" : 21.0303351,
+                  "lng" : -101.7664194
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "León",
+               "short_name" : "León",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "León",
+               "short_name" : "León",
+               "types" : [ "political" ]
+            },
+            {
+               "long_name" : "León",
+               "short_name" : "León",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Castilla y León",
+               "short_name" : "CL",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "España",
+               "short_name" : "ES",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "León, España",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 42.623248,
+                  "lng" : -5.554772499999999
+               },
+               "southwest" : {
+                  "lat" : 42.5839633,
+                  "lng" : -5.6000101
+               }
+            },
+            "location" : {
+               "lat" : 42.5987263,
+               "lng" : -5.5670959
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 42.623248,
+                  "lng" : -5.554772499999999
+               },
+               "southwest" : {
+                  "lat" : 42.5839633,
+                  "lng" : -5.6000101
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      },
+      {
+         "address_components" : [
+            {
+               "long_name" : "Léon",
+               "short_name" : "Léon",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Landas",
+               "short_name" : "40",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Aquitania",
+               "short_name" : "Aquitania",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Francia",
+               "short_name" : "FR",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Léon, Francia",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 43.899834,
+                  "lng" : -1.206105
+               },
+               "southwest" : {
+                  "lat" : 43.795077,
+                  "lng" : -1.347418
+               }
+            },
+            "location" : {
+               "lat" : 43.875828,
+               "lng" : -1.303137
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 43.899834,
+                  "lng" : -1.206105
+               },
+               "southwest" : {
+                  "lat" : 43.795077,
+                  "lng" : -1.347418
+               }
+            }
+         },
+         "types" : [ "locality", "political" ]
+      }
+   ],
+   "status" : "OK"
+}

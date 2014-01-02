@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public abstract class ListAdapterGenerico extends BaseAdapter {
 
-	//private ArrayList<?> entradas; 
+	private ArrayList<?> entradas; 
 	private int mR_layout_IdView; 
 	private Context mMeteoContext;
 
@@ -26,18 +26,18 @@ public abstract class ListAdapterGenerico extends BaseAdapter {
 	 * @param aItem El item que será la asociada a la view. La entrada es del tipo del paquete/handler
 	 * @param view View particular que contendrá los datos del paquete/handler
 	 *=========================================================================================================*/
-	//public abstract void onSetItemForListAdapterGenerico (Object aItem, View view);
-	public abstract void onSetItemForListAdapterGenerico (View view);
+	//public abstract void onItemView (Object aItem, View view);
+	public abstract void onMyItemView (Object entrada, View view);
 
 	/**==============================================================
 	 * Constructor: guarda la referencia a la actividad principal
 	 * 				como contexto 
 	 *===============================================================*/
 	//public ListAdapterGenerico(Context contexto, int R_layout_IdView, ArrayList<?> entradas) {
-	public ListAdapterGenerico(Context contexto, int R_layout_IdView) {
+	public ListAdapterGenerico(Context contexto, int R_layout_IdView, ArrayList<?> entradas) {
 		super();
 		this.mMeteoContext = contexto;
-		//this.entradas = entradas; 
+		this.entradas = entradas; 
 		this.mR_layout_IdView = R_layout_IdView; 
 	}
 
@@ -45,20 +45,17 @@ public abstract class ListAdapterGenerico extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-
-		return 5;
+		return entradas.size();
 	}
 
 	@Override
-	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object getItem(int posicion) {
+		return entradas.get(posicion);
 	}
 
 	@Override
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long getItemId(int posicion) {
+		return posicion;
 	}
 
 	@Override
@@ -78,7 +75,7 @@ public abstract class ListAdapterGenerico extends BaseAdapter {
 		 * Rellena la vista del item en el método que utiliza el adaptador.
 		 *------------------------------------------------------------------*/
 		//onSetItemForListAdapterGenerico (entradas.get(position), convertView);
-		onSetItemForListAdapterGenerico (convertView);
+		onMyItemView (entradas.get(position), convertView);
 
 		//		ImageView iconoPronostico = (ImageView) convertView.findViewById(R.id.iconoPronostico);
 		//		iconoPronostico.setImageDrawable(mMeteoContext.getResources().getDrawable(R.raw.meteo_rain));
