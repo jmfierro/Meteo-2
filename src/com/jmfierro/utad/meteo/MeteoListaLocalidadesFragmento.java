@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.jmfierro.utad.meteo.datos.DatosMeteo;
+import com.jmfierro.utad.meteo.datos.DatosMeteoList;
 import com.jmfierro.utad.meteo.ut.ListAdapterGenerico;
 import com.jmfierro.utad.meteo.web.loadWebTask;
 //import com.jmfierro.utad.meteo.weather.loadWebTask.OnWebListener;
@@ -28,16 +29,18 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 	 * Callback que notifique a la Activity de que elemento del listado se ha pulsado.
 	 *===================================================================================*/
 	private Callbacks mCallbacks = CallbacksVacios;
-	public ArrayList<DatosMeteo> mArrayListDatosMeteo = new ArrayList<DatosMeteo>();
+//	public ArrayList<DatosMeteo> mArrayListDatosMeteo = new ArrayList<DatosMeteo>();
+	private DatosMeteoList mDatosMeteoList = new DatosMeteoList();
 	
 	public interface Callbacks {
-		public void onMyItemViewSeleccionado(String id);
+		//public void onMyItemViewSeleccionado(String id);
+		public void onMyItemViewSeleccionado(DatosMeteo datosMeteo);
 	}
 	 
 	private static Callbacks CallbacksVacios = new Callbacks() {
 
 		@Override
-		public void onMyItemViewSeleccionado(String id) {
+		public void onMyItemViewSeleccionado(DatosMeteo datosMeteo) {
 			
 		}
 	};
@@ -57,110 +60,41 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		//ArrayList<DatosMeteo> arrayListDatosMeteo = new ArrayList<DatosMeteo>();
-//		BuscarLocalidadTask bl = new BuscarLocalidadTask();
 		loadWebTask bl = new loadWebTask() {
-
-//			@Override
-//			public void updateMyView(ArrayList<DatosMeteo> arrayListDatosMeteo, String stringJSON) {
-//				//Toast.makeText(getApplicationContext(), "updateMyView()", Toast.LENGTH_SHORT).show();
-//				try {
-//					//Generate the jsonObject form respobnse
-//					JSONObject jsonObject = new JSONObject(stringJSON);
-//					//					ArrayList<DatosMeteo> arrayListDatosMeteo = null;
-//
-//					if (jsonObject.getString("status").equals("OK")) {
-//						JSONArray localidades = jsonObject.getJSONArray("results"); 
-//
-//						for (int i=0; i < localidades.length(); i++) {
-//							JSONObject objMain = localidades.getJSONObject(i);
-//
-//
-//							//String nombre = String.format(j.getString("formatted_address"),"UTF-8");
-//							String nombre = objMain.getString("formatted_address");
-////							TextView textLocalidad = (TextView) view.findViewById(R.id.text_Item_ListaLocalidades_Nomb);
-////							textLocalidad.setText(nombre);
-//							DatosMeteo datosMeteo1 = new DatosMeteo();
-//							datosMeteo1.setNombre(nombre);
-//							arrayListDatosMeteo.add(datosMeteo1);
-//
-//							JSONObject objGeo = objMain.getJSONObject("geometry");
-//							JSONObject objLoc = objGeo.getJSONObject("location");
-//							Double lat = objLoc.getDouble("lat");
-//							Double log = objLoc.getDouble("lng");
-//						}
-//
-//					}
-//				} catch (JSONException e) {
-//					Log.e("JSON Parser", "Error parsing data " + e.toString());
-//				}
-//
-//			}
 
 			@Override
 			public InputStream loadRaw() {
-//				mJSONStream = mActividadContexto.getResources()
-//		 		.openRawResource(R.raw.googleapis_lista_localidades);
 				return getResources()
 				 		.openRawResource(R.raw.googleapis_lista_localidades);
 			}
 			@Override
 			public Object parseJSON(String stringJSON) {
-				//Toast.makeText(getApplicationContext(), "updateMyView()", Toast.LENGTH_SHORT).show();
-				
-				ArrayList<DatosMeteo> arraylistDatosMeteo = new ArrayList<DatosMeteo>();
-				try {
-					//Generate the jsonObject form respobnse
-					JSONObject jsonObject = new JSONObject(stringJSON);
-					//					ArrayList<DatosMeteo> arrayListDatosMeteo = null;
-
-					if (jsonObject.getString("status").equals("OK")) {
-						JSONArray localidades = jsonObject.getJSONArray("results"); 
-
-						for (int i=0; i < localidades.length(); i++) {
-							JSONObject objMain = localidades.getJSONObject(i);
-
-
-							//String nombre = String.format(j.getString("formatted_address"),"UTF-8");
-							String nombre = objMain.getString("formatted_address");
-//							TextView textLocalidad = (TextView) view.findViewById(R.id.text_Item_ListaLocalidades_Nomb);
-//							textLocalidad.setText(nombre);
-							DatosMeteo datosMeteo1 = new DatosMeteo();
-							datosMeteo1.setNombre(nombre);
-							((ArrayList<DatosMeteo>) arraylistDatosMeteo)
-											.add(datosMeteo1);
-
-							JSONObject objGeo = objMain.getJSONObject("geometry");
-							JSONObject objLoc = objGeo.getJSONObject("location");
-							Double lat = objLoc.getDouble("lat");
-							Double log = objLoc.getDouble("lng");
-						}
-
-					}
-				} catch (JSONException e) {
-					Log.e("JSON Parser", "Error parsing data " + e.toString());
+				mDatosMeteoList = parseJSONBusqueda(stringJSON);
+				for (int i=0; i< mDatosMeteoList.getdatosMeteoList().size(); i++) {
+					
 				}
-				return arraylistDatosMeteo;
+				
+				
+				return mDatosMeteoList;
 			}
 
 			@Override
 			public void onSetDatos(Object object) {
-				mArrayListDatosMeteo = (ArrayList<DatosMeteo>) object;
-				int i=0;
-				i=6;
+//				mArrayListDatosMeteo = (ArrayList<DatosMeteo>) object;
+				mDatosMeteoList = (DatosMeteoList) object;
+//				Config.mContext.mDatosMeteoList = (DatosMeteoList) object;
+//				Callbacks.mDatosMeteoList = (DatosMeteoList) object;
+//				MeteoMainActivity.this.mDatosMeteoList = (DatosMeteoList) object;
 			}
+
 			@Override
 			public void updateMyView(Object object) {
-				ArrayList<DatosMeteo> kk = new ArrayList<DatosMeteo>();
-				kk = (ArrayList<DatosMeteo>) object;
-				mArrayListDatosMeteo = (ArrayList<DatosMeteo>) object;
-				mArrayListDatosMeteo = kk;
+//				mArrayListDatosMeteo = (ArrayList<DatosMeteo>) object;
 
 				/*------------------------------
 				 * Llama la adptador generico.
 				 *------------------------------*/
-				setListAdapter(new ListAdapterGenerico(getActivity(),R.layout.item_lista_localidades, kk){
-//				setListAdapter(new ListAdapterGenerico(getActivity(),R.layout.item_lista_localidades, mArrayListDatosMeteo){
+				setListAdapter(new ListAdapterGenerico(getActivity(),R.layout.item_lista_localidades, ((DatosMeteoList)object).getdatosMeteoList()) {
 					
 					/*--------------------------------------------------------------------------
 					 * Rellena un item para que lo use el adaptador ListAdapterGenerico.
@@ -181,64 +115,6 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 
 		};
 
-//		bl.setOnWebListener(new OnWebListener() { 
-//			
-//			@Override
-//			public InputStream loadRaw() {
-////				mJSONStream = mActividadContexto.getResources()
-////		 		.openRawResource(R.raw.googleapis_lista_localidades);
-//				return getResources()
-//				 		.openRawResource(R.raw.googleapis_lista_localidades);
-//			}
-//			@Override
-//			public DatosMeteo parseJSON(Object arraylistDatosMeteo, String stringJSON) {
-//				//Toast.makeText(getApplicationContext(), "updateMyView()", Toast.LENGTH_SHORT).show();
-//				try {
-//					//Generate the jsonObject form respobnse
-//					JSONObject jsonObject = new JSONObject(stringJSON);
-//					//					ArrayList<DatosMeteo> arrayListDatosMeteo = null;
-//
-//					if (jsonObject.getString("status").equals("OK")) {
-//						JSONArray localidades = jsonObject.getJSONArray("results"); 
-//
-//						for (int i=0; i < localidades.length(); i++) {
-//							JSONObject objMain = localidades.getJSONObject(i);
-//
-//
-//							//String nombre = String.format(j.getString("formatted_address"),"UTF-8");
-//							String nombre = objMain.getString("formatted_address");
-////							TextView textLocalidad = (TextView) view.findViewById(R.id.text_Item_ListaLocalidades_Nomb);
-////							textLocalidad.setText(nombre);
-//							DatosMeteo datosMeteo1 = new DatosMeteo();
-//							datosMeteo1.setNombre(nombre);
-//							((ArrayList<DatosMeteo>) arraylistDatosMeteo)
-//											.add(datosMeteo1);
-//
-//							JSONObject objGeo = objMain.getJSONObject("geometry");
-//							JSONObject objLoc = objGeo.getJSONObject("location");
-//							Double lat = objLoc.getDouble("lat");
-//							Double log = objLoc.getDouble("lng");
-//						}
-//
-//					}
-//				} catch (JSONException e) {
-//					Log.e("JSON Parser", "Error parsing data " + e.toString());
-//				}
-//				return null;
-//			}
-//			
-//			@Override
-//			public void onSetDatos(Object object) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//		});
-		
-//		bl.setContext(getActivity());
-//		bl.setView(view);
-//		bl.setmArrayListDatosMeteo(mArrayListDatosMeteo);
-//		bl.setmActivity(getActivity());
 		bl.execute(40.6,-3.6);
 
 
@@ -246,13 +122,19 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 	}
 
 	
-	public void updateMyLayout(ArrayList<DatosMeteo> arrayDatosMeteo) {
+	public void updateMyLayout(DatosMeteoList datosMeteoList) {
+//		public void updateMyLayout(ArrayList<DatosMeteo> arrayDatosMeteo) {
 		
-			mArrayListDatosMeteo = arrayDatosMeteo;
+			mDatosMeteoList = datosMeteoList;
+//			ArrayList<DatosMeteo> arr = new ArrayList<DatosMeteo>();
+			ArrayList<DatosMeteo> arrayDatosMeteoList = new ArrayList<DatosMeteo>();
+			arrayDatosMeteoList = datosMeteoList.getdatosMeteoList();
+//			for (int i; i < datosMeteoList.getSize(); i++)
+//				arrayDatosMeteoList.add(datosMeteoList.getdatosMeteoList().get(i));
 			/*------------------------------
 			 * Llama la adptador generico.
 			 *------------------------------*/
-			setListAdapter(new ListAdapterGenerico(getActivity(),R.layout.item_lista_localidades, mArrayListDatosMeteo){
+			setListAdapter(new ListAdapterGenerico(getActivity(),R.layout.item_lista_localidades, datosMeteoList.getdatosMeteoList()){
 				
 				/*--------------------------------------------------------------------------
 				 * Rellena un item para que lo use el adaptador ListAdapterGenerico.
@@ -311,8 +193,53 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 		//mCallbacks.onEntradaSelecionada(Lista_contenido.ENTRADAS_LISTA.get(posicion).id); 
 		listView.setItemChecked(posicion, true);
 	
-		mCallbacks.onMyItemViewSeleccionado(Integer.toString(posicion));
+		//mCallbacks.onMyItemViewSeleccionado(Integer.toString(posicion));
+		mCallbacks.onMyItemViewSeleccionado(mDatosMeteoList.getdatosMeteoList().get(posicion));
 	}
+
+//	public ArrayList<DatosMeteo> getArrayListDatosMeteo() {
+//		return mArrayListDatosMeteo;
+//	}
+//
+//	public void setArrayListDatosMeteo(ArrayList<DatosMeteo> mArrayListDatosMeteo) {
+//		this.mArrayListDatosMeteo = mArrayListDatosMeteo;
+//	}
 	
+	
+	public DatosMeteoList parseJSONBusqueda(String stringJSON) {
+		
+//		ArrayList<DatosMeteo> arraylistDatosMeteo = new ArrayList<DatosMeteo>();
+		DatosMeteoList datosMeteoList = new DatosMeteoList();
+		try {
+
+			JSONObject jsonObject = new JSONObject(stringJSON);
+
+			if (jsonObject.getString("status").equals("OK")) {
+				JSONArray localidades = jsonObject.getJSONArray("results"); 
+
+				for (int i=0; i < localidades.length(); i++) {
+					JSONObject objMain = localidades.getJSONObject(i);
+
+
+					String nombre = objMain.getString("formatted_address");
+//					TextView textLocalidad = (TextView) view.findViewById(R.id.text_Item_ListaLocalidades_Nomb);
+//					textLocalidad.setText(nombre);
+					DatosMeteo datosMeteo1 = new DatosMeteo();
+					datosMeteo1.setNombre(nombre);
+					datosMeteoList.add(datosMeteo1);
+
+					JSONObject objGeo = objMain.getJSONObject("geometry");
+					JSONObject objLoc = objGeo.getJSONObject("location");
+					Double lat = objLoc.getDouble("lat");
+					Double log = objLoc.getDouble("lng");
+				}
+
+			}
+		} catch (JSONException e) {
+			Log.e("JSON Parser", "Error parsing data " + e.toString());
+		}
+		return datosMeteoList;
+	}
+
 	
 }

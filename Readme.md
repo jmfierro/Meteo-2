@@ -27,13 +27,17 @@ La seleccion de una ciudad abre una **segunda actividad** que muestras los detal
 
 ###Servicio para la obtención de datos meteorológicos ###
 
-Para la lectura de datos de internet, o fichero en raw, inicio un servicio para que se ejecute en segundo plano, implementado la clase **WebServicio()**. Esto permite que la conexión a internet se haga en segundo plano y de forma independiente a la actividad que lo llama, es decir, que si se destruye la actividad cliente, el servicio seguirá ejecutándose, lo que permitirá que la base de datos, que implementare más adelante se actualicé. 
-
-Ejecuto el código de la conexión en un hilo separado, utilizando un **AsyncTask**. Con ello la conexión a internet tendrá su propio proceso y no interferirá en la interfaz del usuario.
+Para la lectura de datos de internet, o fichero en raw, inicio un servicio para que se ejecute en **segundo plano**, implementado la clase **WebServicio()**. Esto permite que la conexión a internet se haga en segundo plano y de forma independiente a la actividad que lo llama, es decir, que si se destruye la actividad cliente, el servicio seguirá ejecutándose, lo que permitirá que la base de datos, que implementare más adelante se actualicé. 
 
 Me decido por un **bindService()** porque quiero que haya comunicación entre la actividad y el servicio. El servicio avisará a la actividad cliente cuando los datos hayan sido ya bajados de internet.
 
 Inicio el servicio desde **onCreate()** de la actividad principal porque por ahora sólo quiero que se ejecute una vez al iniciar la aplicación. Otra opción podría ser ejecutarlo desde **onStart()**, y con un if() condicional para que sólo ejecutará el servicio una vez por día, evitando que lo hiciera cada vez que la actividad se volviera a hacer visible despues de haber quedado tapada por otra.
+
+Implemento un sitema de Callback mediante la **interface OnWebServicioListener** para hacer *la carga, parseo y gestión y visualización de datos* . Permite a las clase cliente que ejecuten su propio código para el parseo, gestión y visualización de datos.
+
+Ejecuto el código de la conexión en un hilo separado, utilizando un **AsyncTask**. Con ello la conexión a internet tendrá su propio proceso y no interferirá en la interfaz del usuario.
+
+Hago uso de la clase **loadWebTask.java** para hacer *la carga, parseo y gestión de datos y visualización *mediante un procedimiento de clases abstractas. Permite a las clase cliente que ejecuten su propio código para el parseo de datos, gestión y visualización.
 
 ### Problema: eclipse no reconoce la tablet Nexus 7###
 
@@ -84,8 +88,6 @@ Establezco un **tema** para todas las actividades: **Theme.AppCompat.Light.DarkA
 Para la actividad **MeteoMainActivity** cambio el tema por **LocalidadDetalleStyle** en el **AndroidManifiest.xml**. Pone el fondo negro. Hereda de AppTheme.
 
 Pongo el **estilo** (ListViewItemStyle) en el **RelativeLayout** de **item\_lista\_localidades.xml**. De fondo para el item de la lista aplica un drawable  (background.9.png) y para el item presionado otro (list_item_selected.9.png). También fija margenes y padding.   
-
-
 
 
 ### Wifi###

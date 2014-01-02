@@ -69,7 +69,7 @@ public abstract class loadWebTask extends AsyncTask<Double, Void, Object> {
 		/*
 		 * >> Aviso al cliente cuuando la base de datos esta acutalizada.
 		 */
-		//onSetDatos(object);
+		onSetDatos(object);
 		updateMyView(object);
 	}
 	

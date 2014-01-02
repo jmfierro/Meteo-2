@@ -2,6 +2,17 @@ package com.jmfierro.utad.meteo.datos;
 
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.net.ParseException;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -22,7 +33,7 @@ public class DatosMeteo implements Parcelable{
 	private String grado = null;
 	
 	//General
-	private int id;
+	private long id;
 	private String main = null;
 	private String descripcion  = null;
 	private String img = null;
@@ -54,7 +65,7 @@ public class DatosMeteo implements Parcelable{
 					  String temp_max,
 					  String velocidad,
 					  String grado,
-					  int id,
+					  long id,
 					  String main,
 					  String descripcion,
 					  String img)
@@ -74,6 +85,80 @@ public class DatosMeteo implements Parcelable{
 				  this.descripcion = descripcion;
 				  this.img  =img;
 	}
+	
+
+	/**=====================================================
+	 * Constructores para JSON (String, Stream y JSONObject)
+	 *======================================================*/
+	public DatosMeteo(String stringJSON) throws JSONException, ParseException {
+		
+		new DatosMeteo(new JSONObject(stringJSON));
+	}
+	
+	public DatosMeteo(InputStream streamJSON) throws JSONException, ParseException, IOException {
+			
+		BufferedReader buffReader = null;
+		buffReader = new BufferedReader(new InputStreamReader(streamJSON,Charset.forName("UTF-8")));
+
+		StringBuffer buffer = new StringBuffer();
+		String s = null;
+		while((s = buffReader.readLine()) != null) {
+			buffer.append(s);
+		}
+
+		new DatosMeteo(buffer.toString());
+
+	}
+	
+	public DatosMeteo(JSONObject jsonObject) throws JSONException, ParseException {
+//		String id = datosMeteo.getJSONObject("id").getString("$t");
+//		int _i = id.lastIndexOf('-');
+//		long idLong = Long.parseLong( id.substring(_i + 1) );
+		
+//		String date = datosMeteo.getJSONObject("published").getString("$t");
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//		Date dateDate = sdf.parse(date);
+		
+		//JSONObject jsonObject = new JSONObject(stringJSON);
+
+		//datosMeteo = new DatosMeteo();
+
+		//datosMeteo.setNombre(jsonObject.getString("name"));
+		this.nombre = jsonObject.getString("name");
+
+		JSONArray array = jsonObject.getJSONArray("weather");
+		JSONObject object = array.getJSONObject(0);
+
+//		datosMeteo.setMain(object.getString("main"));
+//		datosMeteo.setDescripcion(object.getString("description"));
+//		datosMeteo.setImg(object.getString("icon"));
+		this.main = object.getString("main");
+		this.descripcion  = object.getString("description");
+		this.img = object.getString("icon");
+
+		JSONObject object2 = jsonObject.getJSONObject("main");
+//		datosMeteo.setTemp(object2.getString("temp"));
+//		datosMeteo.setTemp_min(object2.getString("temp_min"));
+//		datosMeteo.setTemp_max(object2.getString("temp_max"));
+		this.temp = object2.getString("temp");
+		this.temp_min = object2.getString("temp_min");
+		this.temp_max = object2.getString("temp_max");
+
+//		datosMeteo.setPresion(object2.getString("pressure"));
+//		datosMeteo.setHumedad(object2.getString("humidity"));
+		this.presion = object2.getString("pressure");
+		this.humedad = object2.getString("humidity");
+
+		JSONObject object3 = jsonObject.getJSONObject("wind");
+//		datosMeteo.setVelocidad(object3.getString("speed"));
+//		datosMeteo.setGrado(object3.getString("deg"));
+		this.velocidad = object3.getString("speed");
+		this.grado = object3.getString("deg");
+
+
+	}
+
+	
 	
 	/*-------------------
 	 * Getters & Setters
@@ -151,11 +236,11 @@ public class DatosMeteo implements Parcelable{
 		this.grado = grado;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -191,6 +276,8 @@ public class DatosMeteo implements Parcelable{
 		this.nombre = nombre; 
 	}
 
+	
+	
 	/*----------------------------------------------
 	 * Metodos Parcelable
 	 *----------------------------------------------*/
@@ -213,7 +300,7 @@ public class DatosMeteo implements Parcelable{
 			String grado = source.readString();
 			
 			//General
-			int id = source.readInt();
+			long id = source.readLong();
 			String main = source.readString();
 			String descripcion  = source.readString();
 			String img = source.readString();
@@ -256,7 +343,7 @@ public class DatosMeteo implements Parcelable{
 		dest.writeString(this.grado);
 		
 		//General
-		dest.writeInt(this.id);
+		dest.writeLong(this.id);
 		dest.writeString(this.main);
 		dest.writeString(this.descripcion);
 		dest.writeString(this.img);

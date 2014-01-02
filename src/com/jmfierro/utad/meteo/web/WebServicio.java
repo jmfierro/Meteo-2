@@ -14,9 +14,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.jmfierro.utad.meteo.MeteoListaLocalidadesFragmento;
 import com.jmfierro.utad.meteo.MeteoMainActivity;
 import com.jmfierro.utad.meteo.R;
 import com.jmfierro.utad.meteo.datos.DatosMeteo;
+import com.jmfierro.utad.meteo.datos.DatosMeteoList;
 
 import android.app.Service;
 import android.content.Context;
@@ -31,6 +33,7 @@ import android.util.Log;
 public class WebServicio extends Service { 
 
 	private OnWebServicioListener mWebListener; 
+	private DatosMeteoList mDatosMeteoList = new DatosMeteoList();
 
 	/*---------------------------------------------------------
 	 * Métodos para callbacks entre Actividade cliente y Servicio:
@@ -41,7 +44,7 @@ public class WebServicio extends Service {
 	 * >> Método callback para la Actividad cliente.
 	 */
 	public interface OnWebServicioListener {
-		public void onSetDatosMeteo(DatosMeteo DatosMeteo);
+		public void onSetDatosMeteo(DatosMeteoList datosMeteoList);
 		public DatosMeteo parseJSON(DatosMeteo datosMeteo,String stringJSON);
 		public DatosMeteo parseJSON(String stringJSON);
 
@@ -69,7 +72,7 @@ public class WebServicio extends Service {
 	/*----------------------------------------------------
 	 * Método al que acceden los Clientes desde su proceso
 	 *----------------------------------------------------*/
-	public void loadWebDatosMeteo(){
+	public void loadWebDatosMeteo() {
 		Log.d(WebServicio.class.getSimpleName(),"Descarga y actualización de datos");
 
 		/*
@@ -97,24 +100,29 @@ public class WebServicio extends Service {
 
 			@Override
 			public void onSetDatos(Object object) {
-				// TODO Auto-generated method stub
-				
+				mDatosMeteoList.add((DatosMeteo) object);
 			}
 
 			@Override
 			public void updateMyView(Object object) {
-				DatosMeteo datosMeteo = (DatosMeteo) object;
+//				DatosMeteoList datosMeteoList = new DatosMeteoList();
+//				datosMeteoList.add((DatosMeteo) object);
 				if (WebServicio.this.mWebListener != null)
-					WebServicio.this.mWebListener.onSetDatosMeteo(datosMeteo);
+					WebServicio.this.mWebListener.onSetDatosMeteo(mDatosMeteoList);
 				
 			}
 			
 		};
 
 		/*----------------
-		 * Lanza servicio
+		 * Lanza hilo
 		 *----------------*/
+//		DatosMeteoList d  = new DatosMeteoList(); 
+//		d = MeteoListaLocalidadesFragmento.getArrayListDatosMeteo();
 		bl.execute(40.6,-3.6);
+		
+//		if (WebServicio.this.mWebListener != null)
+//			WebServicio.this.mWebListener.onSetDatosMeteo(mDatosMeteoList);
 		
 	}
 
