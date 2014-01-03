@@ -45,10 +45,12 @@ import android.widget.Toast;
 public class MeteoMainActivity extends MeteoMenuActionBarActivity implements MeteoListaLocalidadesFragmento.Callbacks {
 
 
-	private WebBinder mWebBinder; 
-	//private ListView mListView;
 	public DatosMeteoList mDatosMeteoList = new DatosMeteoList();
 
+	private WebBinder mWebBinder; 
+	//private ListView mListView;
+
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -206,17 +208,19 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 //					.replace(R.id.contenedorFrag_LocalidadDetalle,fragmento)
 //					.commit();
 
-					// Argumentos a enviar al fragmento
-					Bundle arg = new Bundle();
-					//arg.putString(MeteoLocalidadDetalleFragmento.EXTRA, (String)aWeather.getTemp());
-					arg.putParcelable(MeteoLocalidadDetalleFragmento.EXTRA, datosMeteoList.get(0));
-					
-					// Creación de Fragmento					
-					MeteoLocalidadDetalleFragmento fragmento = new MeteoLocalidadDetalleFragmento();
-					fragmento.setArguments(arg);
-					getSupportFragmentManager().beginTransaction()
-					.replace(R.id.contenedorFrag_LocalidadDetalle,fragmento)
-					.commit();
+					if (getResources().getBoolean(R.bool.tablet)) {
+						// Argumentos a enviar al fragmento
+						Bundle arg = new Bundle();
+						//arg.putString(MeteoLocalidadDetalleFragmento.EXTRA, (String)aWeather.getTemp());
+						arg.putParcelable(MeteoLocalidadDetalleFragmento.EXTRA, datosMeteoList.get(0));
+
+						// Creación de Fragmento					
+						MeteoLocalidadDetalleFragmento fragmento = new MeteoLocalidadDetalleFragmento();
+						fragmento.setArguments(arg);
+						getSupportFragmentManager().beginTransaction()
+						.replace(R.id.contenedorFrag_LocalidadDetalle,fragmento)
+						.commit();
+					}
 					
 
 					
@@ -224,87 +228,15 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 
 				@Override
 				public DatosMeteo parseJSON(DatosMeteo datosMeteo, String stringJSON) {
-						/*------------------------------
-						 * Parse objeto JSON
-						 *------------------------------*/
-						try {
-
-							JSONObject jsonObject = new JSONObject(stringJSON);
-
-							datosMeteo = new DatosMeteo();
-
-							datosMeteo.setNombre(jsonObject.getString("name"));
-							datosMeteo.setId(jsonObject.getLong("id"));
-
-							JSONArray array = jsonObject.getJSONArray("weather");
-
-							JSONObject object = array.getJSONObject(0);
-
-							datosMeteo.setMain(object.getString("main"));
-							datosMeteo.setDescripcion(object.getString("description"));
-							datosMeteo.setImg(object.getString("icon"));
-
-							JSONObject object2 = jsonObject.getJSONObject("main");
-							datosMeteo.setTemp(object2.getString("temp"));
-							datosMeteo.setTemp_min(object2.getString("temp_min"));
-							datosMeteo.setTemp_max(object2.getString("temp_max"));
-
-							datosMeteo.setPresion(object2.getString("pressure"));
-							datosMeteo.setHumedad(object2.getString("humidity"));
-
-							JSONObject object3 = jsonObject.getJSONObject("wind");
-							datosMeteo.setVelocidad(object3.getString("speed"));
-							datosMeteo.setGrado(object3.getString("deg"));
-
-						} catch (JSONException e) {
-							Log.e("JSON Parser", "Error parsing data " + e.toString());
-						}
-						
-						return datosMeteo;
+					
+					return parseJSONweatherworl(datosMeteo, stringJSON);
 
 				} // ** FIN parseJSON() **
 
 				@Override
 				public DatosMeteo parseJSON(String stringJSON) {
 					
-					DatosMeteo datosMeteo = new DatosMeteo();
-					/*------------------------------
-					 * Parse objeto JSON
-					 *------------------------------*/
-					try {
-
-						//Generate the jsonObject form response
-						JSONObject jsonObject = new JSONObject(stringJSON);
-
-						//datosMeteo = new DatosMeteo();
-
-						datosMeteo.setNombre(jsonObject.getString("name"));
-
-						JSONArray array = jsonObject.getJSONArray("weather");
-
-						JSONObject object = array.getJSONObject(0);
-
-						datosMeteo.setMain(object.getString("main"));
-						datosMeteo.setDescripcion(object.getString("description"));
-						datosMeteo.setImg(object.getString("icon"));
-
-						JSONObject object2 = jsonObject.getJSONObject("main");
-						datosMeteo.setTemp(object2.getString("temp"));
-						datosMeteo.setTemp_min(object2.getString("temp_min"));
-						datosMeteo.setTemp_max(object2.getString("temp_max"));
-
-						datosMeteo.setPresion(object2.getString("pressure"));
-						datosMeteo.setHumedad(object2.getString("humidity"));
-
-						JSONObject object3 = jsonObject.getJSONObject("wind");
-						datosMeteo.setVelocidad(object3.getString("speed"));
-						datosMeteo.setGrado(object3.getString("deg"));
-
-					} catch (JSONException e) {
-						Log.e("JSON Parser", "Error parsing data " + e.toString());
-					}
-					
-					return datosMeteo;
+					return parseJSONweatherworl(stringJSON);
 
 				}
 				
@@ -335,14 +267,9 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 		 *---------------------------------*/
 		if (getResources().getBoolean(R.bool.tablet)) {
 
-//			MeteoLocalidadDetalleFragmento fragmento = new MeteoLocalidadDetalleFragmento();
-//			getSupportFragmentManager().beginTransaction()
-//			.replace(R.id.contenedorFrag_LocalidadDetalle,fragmento)
-//			.commit();
 
 			// Argumentos a enviar al fragmento
 			Bundle arg = new Bundle();
-			//arg.putString(MeteoLocalidadDetalleFragmento.EXTRA, (String)"-");
 			arg.putParcelable(MeteoLocalidadDetalleFragmento.EXTRA, datosMeteo);
 			
 			// Creación de Fragmento					
@@ -355,6 +282,8 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 
 		else {
 			Intent intent = new Intent(MeteoMainActivity.this,MeteoLocalidadDetalle.class);
+//			Intent intent = new Intent(MeteoMainActivity.this,MeteoLocalidadDetalle.class);
+			intent.putExtra(MeteoLocalidadDetalle.EXTRA, datosMeteo);
 			startActivity(intent);
 		}
 	}
@@ -404,6 +333,91 @@ public class MeteoMainActivity extends MeteoMenuActionBarActivity implements Met
 //        mainLayout.setVisibility(View.VISIBLE);
     }
 
+  private DatosMeteo parseJSONweatherworl (DatosMeteo datosMeteo, String stringJSON) {
 
+		 datosMeteo = new DatosMeteo();
+
+	  	/*------------------------------
+		 * Parse objeto JSON
+		 *------------------------------*/
+		try {
+
+			JSONObject jsonObject = new JSONObject(stringJSON);
+
+
+			datosMeteo.setNombre(jsonObject.getString("name"));
+			datosMeteo.setId(jsonObject.getLong("id"));
+
+			JSONArray array = jsonObject.getJSONArray("weather");
+
+			JSONObject object = array.getJSONObject(0);
+
+			datosMeteo.setMain(object.getString("main"));
+			datosMeteo.setDescripcion(object.getString("description"));
+			datosMeteo.setImg(object.getString("icon"));
+
+			JSONObject object2 = jsonObject.getJSONObject("main");
+			datosMeteo.setTemp(object2.getString("temp"));
+			datosMeteo.setTemp_min(object2.getString("temp_min"));
+			datosMeteo.setTemp_max(object2.getString("temp_max"));
+
+			datosMeteo.setPresion(object2.getString("pressure"));
+			datosMeteo.setHumedad(object2.getString("humidity"));
+
+			JSONObject object3 = jsonObject.getJSONObject("wind");
+			datosMeteo.setVelocidad(object3.getString("speed"));
+			datosMeteo.setGrado(object3.getString("deg"));
+
+		} catch (JSONException e) {
+			Log.e("JSON Parser", "Error parsing data " + e.toString());
+		}
+		return datosMeteo;
+
+		
+  }
+
+  
+	public DatosMeteo parseJSONweatherworl(String stringJSON) {
+		
+		DatosMeteo datosMeteo = new DatosMeteo();
+		/*------------------------------
+		 * Parse objeto JSON
+		 *------------------------------*/
+		try {
+
+			//Generate the jsonObject form response
+			JSONObject jsonObject = new JSONObject(stringJSON);
+
+			//datosMeteo = new DatosMeteo();
+
+			datosMeteo.setNombre(jsonObject.getString("name"));
+
+			JSONArray array = jsonObject.getJSONArray("weather");
+
+			JSONObject object = array.getJSONObject(0);
+
+			datosMeteo.setMain(object.getString("main"));
+			datosMeteo.setDescripcion(object.getString("description"));
+			datosMeteo.setImg(object.getString("icon"));
+
+			JSONObject object2 = jsonObject.getJSONObject("main");
+			datosMeteo.setTemp(object2.getString("temp"));
+			datosMeteo.setTemp_min(object2.getString("temp_min"));
+			datosMeteo.setTemp_max(object2.getString("temp_max"));
+
+			datosMeteo.setPresion(object2.getString("pressure"));
+			datosMeteo.setHumedad(object2.getString("humidity"));
+
+			JSONObject object3 = jsonObject.getJSONObject("wind");
+			datosMeteo.setVelocidad(object3.getString("speed"));
+			datosMeteo.setGrado(object3.getString("deg"));
+
+		} catch (JSONException e) {
+			Log.e("JSON Parser", "Error parsing data " + e.toString());
+		}
+		
+		return datosMeteo;
+
+	}
 
 }

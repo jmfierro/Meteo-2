@@ -1,7 +1,20 @@
-<!-- Fragmento estático para el listado de localidades 
- -->
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:id="@+id/edittext1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="1sp" >
+    </EditText>
+
+<!--  Fragmento estático para el listado de localidades  -->
+
+    <fragment
         android:id="@+id/contenedorFrag_ciudadesLista"
-	    android:name="com.jmfierro.utad.meteo.MeteoListaLocalidadesFragmento"
+        android:name="com.jmfierro.utad.meteo.MeteoListaLocalidadesFragmento"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
+</FrameLayout>

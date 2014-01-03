@@ -90,6 +90,27 @@ Para la actividad **MeteoMainActivity** cambio el tema por **LocalidadDetalleSty
 Pongo el **estilo** (ListViewItemStyle) en el **RelativeLayout** de **item\_lista\_localidades.xml**. De fondo para el item de la lista aplica un drawable  (background.9.png) y para el item presionado otro (list_item_selected.9.png). También fija margenes y padding.   
 
 
+### Search View en ActionBar y compatibilidad con API 7 ###
+Para poder usar la introducción de texto desde *ActionBar* he utilizado **TextWatcher** y simulado un Search View. Tuve realizar numerosas pruebas y 
+errores para una correcta simulación.
+
+	        /*
+			* Ocultar teclado
+			* /
+	        //et.setVisibility(View.INVISIBLE);
+	        //et.setVisibility(View.GONE);
+	        //et.requestFocus();
+	        getWindow().setSoftInputMode(
+	    	      WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+	        //imm.hideSoftInputFromWindow(et.getWindowToken(), 0);
+	        isSearchView = false;
+	        //int heigh = et.getHeight();
+	        //et.setHeight(10);
+			...
+ 
+El resultado es mejorable pero tan sólo quería mostrar que se puede hacer. 
+
+
 ### Wifi###
 
 Sin wifi en casa, simulo la lectura de datos desde un **fichero JSON que sitúo en res/raw**. Más adelante lo adapto a una conexión con internet.

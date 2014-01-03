@@ -1,6 +1,10 @@
 package com.jmfierro.utad.meteo;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -70,10 +74,44 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 			@Override
 			public Object parseJSON(String stringJSON) {
 				mDatosMeteoList = parseJSONBusqueda(stringJSON);
+				DatosMeteoList datosMeteoListNew = new DatosMeteoList();
 				for (int i=0; i< mDatosMeteoList.getdatosMeteoList().size(); i++) {
+
+					Double lat = mDatosMeteoList.getdatosMeteoList().get(i).getLat(); 
+					Double log = mDatosMeteoList.getdatosMeteoList().get(i).getLog();  
 					
+					//stringJSON = downloadUrl(lat, log,"sp","metric"); 
+					InputStream streamJSON = getResources().openRawResource(R.raw.weather_test);
+
+					/*-------------------------
+					 *  De Stream a String
+					 *-------------------------*/
+					BufferedReader buffReader = null;
+					buffReader = new BufferedReader(new InputStreamReader(streamJSON,Charset.forName("UTF-8")));
+
+					StringBuffer buffer = new StringBuffer();
+					String s = null;
+					try {
+						while((s = buffReader.readLine()) != null) {
+							buffer.append(s);
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					stringJSON = buffer.toString();
+					
+					DatosMeteo datosMeteo = parseJSONweatherworl(stringJSON);
+
+					
+					datosMeteoListNew.add(datosMeteo);
+					
+					
+					//mDatosMeteoList.add(datosMeteo);
 				}
 				
+				mDatosMeteoList = datosMeteoListNew;
 				
 				return mDatosMeteoList;
 			}
@@ -241,5 +279,47 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 		return datosMeteoList;
 	}
 
+	public DatosMeteo parseJSONweatherworl(String stringJSON) {
+		
+		DatosMeteo datosMeteo = new DatosMeteo();
+		/*------------------------------
+		 * Parse objeto JSON
+		 *------------------------------*/
+		try {
+
+			//Generate the jsonObject form response
+			JSONObject jsonObject = new JSONObject(stringJSON);
+
+			//datosMeteo = new DatosMeteo();
+
+			datosMeteo.setNombre(jsonObject.getString("name"));
+
+			JSONArray array = jsonObject.getJSONArray("weather");
+
+			JSONObject object = array.getJSONObject(0);
+
+			datosMeteo.setMain(object.getString("main"));
+			datosMeteo.setDescripcion(object.getString("description"));
+			datosMeteo.setImg(object.getString("icon"));
+
+			JSONObject object2 = jsonObject.getJSONObject("main");
+			datosMeteo.setTemp(object2.getString("temp"));
+			datosMeteo.setTemp_min(object2.getString("temp_min"));
+			datosMeteo.setTemp_max(object2.getString("temp_max"));
+
+			datosMeteo.setPresion(object2.getString("pressure"));
+			datosMeteo.setHumedad(object2.getString("humidity"));
+
+			JSONObject object3 = jsonObject.getJSONObject("wind");
+			datosMeteo.setVelocidad(object3.getString("speed"));
+			datosMeteo.setGrado(object3.getString("deg"));
+
+		} catch (JSONException e) {
+			Log.e("JSON Parser", "Error parsing data " + e.toString());
+		}
+		
+		return datosMeteo;
+
+	}
 	
 }

@@ -18,7 +18,13 @@
         android:id="@+id/action_settings"
         meteo:showAsAction="never"
         android:title="@string/action_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
-        />
+        android:icon="@android:drawable/ic_menu_preferences"/>
+ 
+    <item
+       android:id="@+id/search"
+       android:actionViewClass="android.widget.SearchView"
+       meteo:showAsAction="always"
+       android:title="Search2" />
+ 
     
 </menu>

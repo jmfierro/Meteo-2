@@ -1,20 +1,35 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
-<!-- Fragmento estático para el listado de localidades  -->
-    <fragment
-        android:id="@+id/contenedorFrag_ciudadesLista"
-	    android:name="com.jmfierro.utad.meteo.MeteoListaLocalidadesFragmento"
-        android:layout_width="200dp"
+    <EditText
+        android:id="@+id/edittext1"
+        android:layout_width="250px"
+        android:layout_height="wrap_content"
+        android:textSize="1sp" >
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:orientation="horizontal" >
 
-<!-- 	Fragmento dinámico con el contenido del elemento pulsado del listado -->
-    <FrameLayout
-        android:id="@+id/contenedorFrag_LocalidadDetalle"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3" />
+        <!-- Fragmento estático para el listado de localidades -->
 
-</LinearLayout>
+        <fragment
+            android:id="@+id/contenedorFrag_ciudadesLista"
+            android:name="com.jmfierro.utad.meteo.MeteoListaLocalidadesFragmento"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <!-- Fragmento dinámico con el contenido del elemento pulsado del listado -->
+
+        <FrameLayout
+            android:id="@+id/contenedorFrag_LocalidadDetalle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3" />
+    </LinearLayout>
+
+</FrameLayout>

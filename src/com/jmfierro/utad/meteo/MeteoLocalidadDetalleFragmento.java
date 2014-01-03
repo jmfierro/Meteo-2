@@ -25,7 +25,7 @@ public class MeteoLocalidadDetalleFragmento extends Fragment {
 	public static final String EXTRA= "extra";
 	private DatosMeteo w;
 	private String mTextTemp;
-	private DatosMeteo mDatosMeteo;
+	private DatosMeteo mDatosMeteo = new DatosMeteo();
 	
 	
 	/**==============================================
