@@ -1,5 +1,6 @@
 package com.jmfierro.utad.meteo.datos;
 
+import java.io.InputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,8 +11,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.jmfierro.utad.meteo.ut.Utils;
+
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 
 
@@ -50,22 +54,96 @@ public class DatosMeteoList implements Parcelable{
 	}
 	
 	
-	/*
-	 * Lee obj con formato JSON
-	 */
-	public DatosMeteoList(JSONObject jsonBlog) throws JSONException, ParseException {
-		this();
+	//public DatosMeteoList parseJSONBusqueda(String stringJSON) {
+	public DatosMeteoList (String stringJSONBusqueda) {
 		
-		JSONObject feed = jsonBlog.getJSONObject("feed");
-		JSONArray entries = feed.getJSONArray("entry");
-		
-		for (int i = 0; i< entries.length(); i++) {
-			JSONObject datosMeteoJSON = entries.getJSONObject(i);
-			DatosMeteo datosMeteo = new DatosMeteo(datosMeteoJSON);
-			this.add(datosMeteo);
+//		ArrayList<DatosMeteo> arraylistDatosMeteo = new ArrayList<DatosMeteo>();
+		DatosMeteoList datosMeteoList = new DatosMeteoList();
+		try {
+
+			JSONObject jsonObject = new JSONObject(stringJSONBusqueda);
+
+			if (jsonObject.getString("status").equals("OK")) {
+				JSONArray localidades = jsonObject.getJSONArray("results"); 
+
+				for (int i=0; i < localidades.length(); i++) {
+					JSONObject objMain = localidades.getJSONObject(i);
+
+
+					String nombre = objMain.getString("formatted_address");
+//					TextView textLocalidad = (TextView) view.findViewById(R.id.text_Item_ListaLocalidades_Nomb);
+//					textLocalidad.setText(nombre);
+					DatosMeteo datosMeteo = new DatosMeteo();
+					datosMeteo.setNombre(nombre);
+					datosMeteo.setId(i);
+					this.add(datosMeteo);
+
+					JSONObject objGeo = objMain.getJSONObject("geometry");
+					JSONObject objLoc = objGeo.getJSONObject("location");
+					Double lat = objLoc.getDouble("lat");
+					Double log = objLoc.getDouble("lng");
+				}
+
+			}
+		} catch (JSONException e) {
+			Log.e("JSON Parser", "Error parsing data " + e.toString());
 		}
+		
 	}
+
 	
+	/**================================
+	 * De JSON Object a DatosMeteoList
+	 *=================================*/
+	static public DatosMeteoList parseJSONBusqueda(InputStream streamJSON) {
+		
+		String stringJSON = Utils.stringJSONfromStream(streamJSON);
+		//DatosMeteoList datosMeteoList = parseJSONBusqueda(stringJSON);
+		//DatosMeteoList datosMeteoList = new DatosMeteoList(stringJSON);
+		DatosMeteoList datosMeteoList = new DatosMeteoList();
+		datosMeteoList = DatosMeteoList.parseJSONBusqueda(stringJSON);
+		
+		return datosMeteoList;
+	}	
+	
+	static public DatosMeteoList parseJSONBusqueda(String stringJSON) {
+		
+//		ArrayList<DatosMeteo> arraylistDatosMeteo = new ArrayList<DatosMeteo>();
+		DatosMeteoList datosMeteoList = new DatosMeteoList();
+		try {
+
+			JSONObject jsonObject = new JSONObject(stringJSON);
+
+			if (jsonObject.getString("status").equals("OK")) {
+				JSONArray localidades = jsonObject.getJSONArray("results"); 
+
+				for (int i=0; i < localidades.length(); i++) {
+					JSONObject objMain = localidades.getJSONObject(i);
+
+
+					String nombre = objMain.getString("formatted_address");
+//					TextView textLocalidad = (TextView) view.findViewById(R.id.text_Item_ListaLocalidades_Nomb);
+//					textLocalidad.setText(nombre);
+					DatosMeteo datosMeteo = new DatosMeteo();
+					datosMeteo.setNombre(nombre);
+
+					JSONObject objGeo = objMain.getJSONObject("geometry");
+					JSONObject objLoc = objGeo.getJSONObject("location");
+					Double lat = objLoc.getDouble("lat");
+					datosMeteo.setLat(lat);
+					Double log = objLoc.getDouble("lng");
+					datosMeteo.setLog(log);
+
+					datosMeteoList.add(datosMeteo); 
+				}
+
+			}
+		} catch (JSONException e) {
+			Log.e("JSON Parser", "Error parsing data " + e.toString());
+		}
+		return datosMeteoList;
+	}
+
 
 	public void add(DatosMeteo datosMeteo) {
 		add(new DatosMeteo[]{ datosMeteo });
@@ -82,8 +160,6 @@ public class DatosMeteoList implements Parcelable{
 	
 
 	public DatosMeteo get(long id) {  // Devuelve el datosMeteo
-		DatosMeteo dm  = new DatosMeteo();
-		dm = byId.get(id);
 		return byId.get(id);
 	}
 	

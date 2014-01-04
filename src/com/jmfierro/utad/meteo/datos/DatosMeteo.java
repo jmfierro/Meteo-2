@@ -49,7 +49,7 @@ public class DatosMeteo implements Parcelable{
 		new DatosMeteo(0,0,
 				null,null,null,null,null,null,null,
 				0,
-				null,null,null);
+				null,null,null,null);
 	}
 	
 
@@ -68,7 +68,8 @@ public class DatosMeteo implements Parcelable{
 					  long id,
 					  String main,
 					  String descripcion,
-					  String img)
+					  String img,
+					  String nombre)
 	{
 		
 				  this.log = log; 
@@ -84,33 +85,45 @@ public class DatosMeteo implements Parcelable{
 				  this.main = main;
 				  this.descripcion = descripcion;
 				  this.img  =img;
+				  this.nombre=nombre;
 	}
 	
 
 	/**=====================================================
 	 * Constructores para JSON (String, Stream y JSONObject)
 	 *======================================================*/
-	public DatosMeteo(String stringJSON) throws JSONException, ParseException {
+	public DatosMeteo(String stringJSON) {
 		
-		new DatosMeteo(new JSONObject(stringJSON));
+		try {
+			new DatosMeteo(new JSONObject(stringJSON));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public DatosMeteo(InputStream streamJSON) throws JSONException, ParseException, IOException {
+	public DatosMeteo(InputStream streamJSON) {
 			
 		BufferedReader buffReader = null;
 		buffReader = new BufferedReader(new InputStreamReader(streamJSON,Charset.forName("UTF-8")));
 
 		StringBuffer buffer = new StringBuffer();
 		String s = null;
-		while((s = buffReader.readLine()) != null) {
-			buffer.append(s);
+		try {
+			while((s = buffReader.readLine()) != null) {
+				buffer.append(s);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		new DatosMeteo(buffer.toString());
 
 	}
 	
-	public DatosMeteo(JSONObject jsonObject) throws JSONException, ParseException {
+	public DatosMeteo(JSONObject jsonObject) {
+		try {
 //		String id = datosMeteo.getJSONObject("id").getString("$t");
 //		int _i = id.lastIndexOf('-');
 //		long idLong = Long.parseLong( id.substring(_i + 1) );
@@ -154,6 +167,13 @@ public class DatosMeteo implements Parcelable{
 //		datosMeteo.setGrado(object3.getString("deg"));
 		this.velocidad = object3.getString("speed");
 		this.grado = object3.getString("deg");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
 	}
@@ -309,7 +329,7 @@ public class DatosMeteo implements Parcelable{
 			String nombre = source.readString();
 			
 			return new DatosMeteo(log,lat,temp,presion,humedad,
-					temp_min,temp_max,velocidad,grado,id,main,descripcion,img);
+					temp_min,temp_max,velocidad,grado,id,main,descripcion,img,nombre);
 		}
 
 		@Override

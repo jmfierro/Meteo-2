@@ -13,7 +13,7 @@
     <string name="search_hint">Buscar hint</string>
   
     <string name="accept">Aceptar</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Cancel</string> 
     
-     
+    
 </resources>

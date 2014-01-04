@@ -93,9 +93,10 @@ public class WebServicio extends Service {
 				/*------------------------------
 				 * Parse objeto JSON
 				 *------------------------------*/
-//				if (mWebListener != null)
-//					mDatosMeteo = WebServicio.this.mWebListener.parseJSON(mDatosMeteo, stringJSON);
-				return WebServicio.this.mWebListener.parseJSON(stringJSON);
+				DatosMeteo datosMeteo = new DatosMeteo();
+				if (mWebListener != null)
+					datosMeteo = WebServicio.this.mWebListener.parseJSON(stringJSON);
+				return datosMeteo;
 			}
 
 			@Override
@@ -105,10 +106,10 @@ public class WebServicio extends Service {
 
 			@Override
 			public void updateMyView(Object object) {
-//				DatosMeteoList datosMeteoList = new DatosMeteoList();
-//				datosMeteoList.add((DatosMeteo) object);
+				DatosMeteoList datosMeteoList = new DatosMeteoList();
+				datosMeteoList.add((DatosMeteo) object);
 				if (WebServicio.this.mWebListener != null)
-					WebServicio.this.mWebListener.onSetDatosMeteo(mDatosMeteoList);
+					WebServicio.this.mWebListener.onSetDatosMeteo(datosMeteoList);
 				
 			}
 			

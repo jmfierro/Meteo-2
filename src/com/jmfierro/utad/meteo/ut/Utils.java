@@ -1,5 +1,11 @@
 package com.jmfierro.utad.meteo.ut;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+
 import com.jmfierro.utad.meteo.Config;
 import com.jmfierro.utad.meteo.MeteoMainActivity;
 
@@ -31,6 +37,30 @@ public class Utils {
         }
   
 //	return false;
+	}
+
+	
+	/**====================
+	 *  De Stream a String
+	 *=====================*/
+	static public String stringJSONfromStream(InputStream streamJSON) {
+		
+		BufferedReader buffReader = null;
+		buffReader = new BufferedReader(new InputStreamReader(streamJSON,Charset.forName("UTF-8")));
+
+		StringBuffer buffer = new StringBuffer();
+		String s = null;
+		try {
+			while((s = buffReader.readLine()) != null) {
+				buffer.append(s);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String stringJSON = buffer.toString();
+		return stringJSON;
 	}
 
 

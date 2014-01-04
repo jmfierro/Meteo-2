@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 public class MeteoLocalidadDetalleFragmento extends Fragment {
 	
-	public static final String EXTRA= "extra";
+	public static final String EXTRA= "DatosMeteo";
 	private DatosMeteo w;
 	private String mTextTemp;
 	private DatosMeteo mDatosMeteo = new DatosMeteo();
@@ -91,7 +91,7 @@ public class MeteoLocalidadDetalleFragmento extends Fragment {
 		textGrado.setText((String)this.mDatosMeteo.getGrado() + "->");
 		
 		
-		ImageView  imgPronos  = (ImageView) viewFrag.findViewById(R.id.imgCiudadDetallePronos);
+		ImageView  imgPronos  = (ImageView) viewFrag.findViewById(R.id.img_LocalidadDetalle_Pronos);
 //		imgPronos.setImageDrawable(this.getResources().getDrawable(R.raw.meteo_rain));
 	    //image.setImageResource(imageresource);
 	    
@@ -100,7 +100,9 @@ public class MeteoLocalidadDetalleFragmento extends Fragment {
 //		if (mTextTemp != null)
 //			textTemp.setText((String)this.mTextTemp+"º");
 		}
-		
+
+		getActivity().supportInvalidateOptionsMenu();
+
 		return viewFrag;
 //		return super.onCreateView(inflater, container, savedInstanceState);
 	}

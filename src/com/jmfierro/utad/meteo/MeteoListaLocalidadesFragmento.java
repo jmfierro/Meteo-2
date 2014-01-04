@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import com.jmfierro.utad.meteo.datos.DatosMeteo;
 import com.jmfierro.utad.meteo.datos.DatosMeteoList;
 import com.jmfierro.utad.meteo.ut.ListAdapterGenerico;
+import com.jmfierro.utad.meteo.ut.Utils;
 import com.jmfierro.utad.meteo.web.loadWebTask;
 //import com.jmfierro.utad.meteo.weather.loadWebTask.OnWebListener;
 
@@ -64,6 +65,8 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+//		readSQLdatosMeteo();
+		
 		loadWebTask bl = new loadWebTask() {
 
 			@Override
@@ -73,64 +76,29 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 			}
 			@Override
 			public Object parseJSON(String stringJSON) {
-				mDatosMeteoList = parseJSONBusqueda(stringJSON);
-				DatosMeteoList datosMeteoListNew = new DatosMeteoList();
-				for (int i=0; i< mDatosMeteoList.getdatosMeteoList().size(); i++) {
-
-					Double lat = mDatosMeteoList.getdatosMeteoList().get(i).getLat(); 
-					Double log = mDatosMeteoList.getdatosMeteoList().get(i).getLog();  
-					
-					//stringJSON = downloadUrl(lat, log,"sp","metric"); 
-					InputStream streamJSON = getResources().openRawResource(R.raw.weather_test);
-
-					/*-------------------------
-					 *  De Stream a String
-					 *-------------------------*/
-					BufferedReader buffReader = null;
-					buffReader = new BufferedReader(new InputStreamReader(streamJSON,Charset.forName("UTF-8")));
-
-					StringBuffer buffer = new StringBuffer();
-					String s = null;
-					try {
-						while((s = buffReader.readLine()) != null) {
-							buffer.append(s);
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-					stringJSON = buffer.toString();
-					
-					DatosMeteo datosMeteo = parseJSONweatherworl(stringJSON);
-
-					
-					datosMeteoListNew.add(datosMeteo);
-					
-					
-					//mDatosMeteoList.add(datosMeteo);
-				}
 				
-				mDatosMeteoList = datosMeteoListNew;
+				DatosMeteoList datosMeteoList = new DatosMeteoList();
+				datosMeteoList = DatosMeteoList.parseJSONBusqueda(stringJSON);
+				return datosMeteoList;
 				
-				return mDatosMeteoList;
 			}
 
 			@Override
 			public void onSetDatos(Object object) {
-//				mArrayListDatosMeteo = (ArrayList<DatosMeteo>) object;
 				mDatosMeteoList = (DatosMeteoList) object;
-//				Config.mContext.mDatosMeteoList = (DatosMeteoList) object;
-//				Callbacks.mDatosMeteoList = (DatosMeteoList) object;
-//				MeteoMainActivity.this.mDatosMeteoList = (DatosMeteoList) object;
 			}
 
+			
+			/*
+			 * Instancia el ListView cuando ha terminado de 
+			 * leer datos de inernet.
+			 */
 			@Override
 			public void updateMyView(Object object) {
 //				mArrayListDatosMeteo = (ArrayList<DatosMeteo>) object;
 
 				/*------------------------------
-				 * Llama la adptador generico.
+				 * Llama la adptador generico. 
 				 *------------------------------*/
 				setListAdapter(new ListAdapterGenerico(getActivity(),R.layout.item_lista_localidades, ((DatosMeteoList)object).getdatosMeteoList()) {
 					
@@ -243,83 +211,143 @@ public class MeteoListaLocalidadesFragmento extends ListFragment {
 //		this.mArrayListDatosMeteo = mArrayListDatosMeteo;
 //	}
 	
+//	/**================================
+//	 * De JSON Object a DatosMeteoList
+//	 *=================================*/
+//	public DatosMeteoList parseJSONBusqueda(InputStream streamJSON) {
+//		
+//		String stringJSON = Utils.stringJSONfromStream(streamJSON);
+//		//DatosMeteoList datosMeteoList = parseJSONBusqueda(stringJSON);
+//		DatosMeteoList datosMeteoList = new DatosMeteoList(stringJSON);
+//		
+//		return datosMeteoList;
+//	}	
+//	public DatosMeteoList parseJSONBusqueda(String stringJSON) {
+//		
+////		ArrayList<DatosMeteo> arraylistDatosMeteo = new ArrayList<DatosMeteo>();
+//		DatosMeteoList datosMeteoList = new DatosMeteoList();
+//		try {
+//
+//			JSONObject jsonObject = new JSONObject(stringJSON);
+//
+//			if (jsonObject.getString("status").equals("OK")) {
+//				JSONArray localidades = jsonObject.getJSONArray("results"); 
+//
+//				for (int i=0; i < localidades.length(); i++) {
+//					JSONObject objMain = localidades.getJSONObject(i);
+//
+//
+//					String nombre = objMain.getString("formatted_address");
+////					TextView textLocalidad = (TextView) view.findViewById(R.id.text_Item_ListaLocalidades_Nomb);
+////					textLocalidad.setText(nombre);
+//					DatosMeteo datosMeteo1 = new DatosMeteo();
+//					datosMeteo1.setNombre(nombre);
+//					datosMeteoList.add(datosMeteo1);
+//
+//					JSONObject objGeo = objMain.getJSONObject("geometry");
+//					JSONObject objLoc = objGeo.getJSONObject("location");
+//					Double lat = objLoc.getDouble("lat");
+//					Double log = objLoc.getDouble("lng");
+//				}
+//
+//			}
+//		} catch (JSONException e) {
+//			Log.e("JSON Parser", "Error parsing data " + e.toString());
+//		}
+//		return datosMeteoList;
+//	}
+
 	
-	public DatosMeteoList parseJSONBusqueda(String stringJSON) {
+	
+//	public DatosMeteo parseJSONweatherworl(String stringJSON) {
+//		
+//		DatosMeteo datosMeteo = new DatosMeteo();
+//		/*------------------------------
+//		 * Parse objeto JSON
+//		 *------------------------------*/
+//		try {
+//
+//			//Generate the jsonObject form response
+//			JSONObject jsonObject = new JSONObject(stringJSON);
+//
+//			//datosMeteo = new DatosMeteo();
+//
+//			datosMeteo.setNombre(jsonObject.getString("name"));
+//
+//			JSONArray array = jsonObject.getJSONArray("weather");
+//
+//			JSONObject object = array.getJSONObject(0);
+//
+//			datosMeteo.setMain(object.getString("main"));
+//			datosMeteo.setDescripcion(object.getString("description"));
+//			datosMeteo.setImg(object.getString("icon"));
+//
+//			JSONObject object2 = jsonObject.getJSONObject("main");
+//			datosMeteo.setTemp(object2.getString("temp"));
+//			datosMeteo.setTemp_min(object2.getString("temp_min"));
+//			datosMeteo.setTemp_max(object2.getString("temp_max"));
+//
+//			datosMeteo.setPresion(object2.getString("pressure"));
+//			datosMeteo.setHumedad(object2.getString("humidity"));
+//
+//			JSONObject object3 = jsonObject.getJSONObject("wind");
+//			datosMeteo.setVelocidad(object3.getString("speed"));
+//			datosMeteo.setGrado(object3.getString("deg"));
+//
+//		} catch (JSONException e) {
+//			Log.e("JSON Parser", "Error parsing data " + e.toString());
+//		}
+//		
+//		return datosMeteo;
+//
+//	}
+	
+	public Object parseJSONgoogleapisList(String stringJSON) {
 		
-//		ArrayList<DatosMeteo> arraylistDatosMeteo = new ArrayList<DatosMeteo>();
-		DatosMeteoList datosMeteoList = new DatosMeteoList();
-		try {
+		//DatosMeteoList datosMeteoList = parseJSONBusqueda(stringJSON);
+		DatosMeteoList datosMeteoList = new DatosMeteoList(stringJSON);
+		DatosMeteoList datosMeteoListNew = new DatosMeteoList();
+		for (int i=0; i< datosMeteoList.getdatosMeteoList().size(); i++) {
 
-			JSONObject jsonObject = new JSONObject(stringJSON);
+			Double lat = datosMeteoList.getdatosMeteoList().get(i).getLat(); 
+			Double log = datosMeteoList.getdatosMeteoList().get(i).getLog();  
+			
+			//stringJSON = downloadUrl(lat, log,"sp","metric"); 
+			InputStream streamJSON = getResources().openRawResource(R.raw.weather_test);
 
-			if (jsonObject.getString("status").equals("OK")) {
-				JSONArray localidades = jsonObject.getJSONArray("results"); 
+			/*-------------------------
+			 *  De Stream a String
+			 *-------------------------*/
+			BufferedReader buffReader = null;
+			buffReader = new BufferedReader(new InputStreamReader(streamJSON,Charset.forName("UTF-8")));
 
-				for (int i=0; i < localidades.length(); i++) {
-					JSONObject objMain = localidades.getJSONObject(i);
-
-
-					String nombre = objMain.getString("formatted_address");
-//					TextView textLocalidad = (TextView) view.findViewById(R.id.text_Item_ListaLocalidades_Nomb);
-//					textLocalidad.setText(nombre);
-					DatosMeteo datosMeteo1 = new DatosMeteo();
-					datosMeteo1.setNombre(nombre);
-					datosMeteoList.add(datosMeteo1);
-
-					JSONObject objGeo = objMain.getJSONObject("geometry");
-					JSONObject objLoc = objGeo.getJSONObject("location");
-					Double lat = objLoc.getDouble("lat");
-					Double log = objLoc.getDouble("lng");
+			StringBuffer buffer = new StringBuffer();
+			String s = null;
+			try {
+				while((s = buffReader.readLine()) != null) {
+					buffer.append(s);
 				}
-
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (JSONException e) {
-			Log.e("JSON Parser", "Error parsing data " + e.toString());
+
+			stringJSON = buffer.toString();
+			
+			//DatosMeteo datosMeteo = parseJSONweatherworl(stringJSON);
+			DatosMeteo datosMeteo = new DatosMeteo(stringJSON);
+
+			
+			datosMeteoListNew.add(datosMeteo);
+			
+			
+			//mDatosMeteoList.add(datosMeteo);
 		}
+		
+		datosMeteoList = datosMeteoListNew;
+		
 		return datosMeteoList;
 	}
 
-	public DatosMeteo parseJSONweatherworl(String stringJSON) {
-		
-		DatosMeteo datosMeteo = new DatosMeteo();
-		/*------------------------------
-		 * Parse objeto JSON
-		 *------------------------------*/
-		try {
 
-			//Generate the jsonObject form response
-			JSONObject jsonObject = new JSONObject(stringJSON);
-
-			//datosMeteo = new DatosMeteo();
-
-			datosMeteo.setNombre(jsonObject.getString("name"));
-
-			JSONArray array = jsonObject.getJSONArray("weather");
-
-			JSONObject object = array.getJSONObject(0);
-
-			datosMeteo.setMain(object.getString("main"));
-			datosMeteo.setDescripcion(object.getString("description"));
-			datosMeteo.setImg(object.getString("icon"));
-
-			JSONObject object2 = jsonObject.getJSONObject("main");
-			datosMeteo.setTemp(object2.getString("temp"));
-			datosMeteo.setTemp_min(object2.getString("temp_min"));
-			datosMeteo.setTemp_max(object2.getString("temp_max"));
-
-			datosMeteo.setPresion(object2.getString("pressure"));
-			datosMeteo.setHumedad(object2.getString("humidity"));
-
-			JSONObject object3 = jsonObject.getJSONObject("wind");
-			datosMeteo.setVelocidad(object3.getString("speed"));
-			datosMeteo.setGrado(object3.getString("deg"));
-
-		} catch (JSONException e) {
-			Log.e("JSON Parser", "Error parsing data " + e.toString());
-		}
-		
-		return datosMeteo;
-
-	}
-	
 }
